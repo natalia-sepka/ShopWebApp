@@ -1,7 +1,6 @@
 package com.example.auth.entity;
 
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,6 +44,16 @@ public class User implements UserDetails {
         this.isLock = isLock;
         this.isEnabled = isEnabled;
         generateUuid();
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+    private long getId(){
+        return id;
+    }
+    public String getEmail() {
+        return email;
     }
 
     @Override

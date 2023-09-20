@@ -1,6 +1,6 @@
 package com.example.auth.services;
 
-import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -16,15 +16,13 @@ import java.util.Map;
 @Component
 public class JwtService {
 
-    public JwtService(@Value("${jwt.secret}") String secret, @Value("${jwt.exp}") int exp) {
+    public JwtService(@Value("${jwt.secret}") String secret) {
         SECRET = secret;
-        this.exp = exp;
     }
     public final String SECRET;
-    private final int exp;
     
-    public void validateToken(final String token) {
-        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJwt(token);
+    public void validateToken(final String token) throws ExpiredJwtException, IllegalArgumentException {
+        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
     }
 
     private Key getSignKey() {
@@ -32,12 +30,12 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, int exp) {
         Map<String, Object> claims = new HashMap<>();
-        return creteToken(claims, username);
+        return creteToken(claims, username, exp);
     }
 
-    public String creteToken(Map<String, Object> claims, String username) {
+    public String creteToken(Map<String, Object> claims, String username, int exp) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
