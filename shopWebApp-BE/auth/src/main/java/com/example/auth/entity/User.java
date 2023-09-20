@@ -17,8 +17,8 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(generator ="user_id_seq", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_id_seq", sequenceName = "use_id_seq", allocationSize = 1)
+    @GeneratedValue(generator ="users_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     private Long id;
     private String uuid;
     private String login;
@@ -26,7 +26,9 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(name = "islock")
     private boolean isLock;
+    @Column(name = "isenabled")
     private boolean isEnabled;
 
     public User() {
