@@ -14,7 +14,7 @@ public class UserRegisterDTO {
 
     @Length(min = 5, max = 50, message = "Login should contains 5 to 50 characters.")
     private String login;
-    @Email
+    @Email(message = "Invalid e-mail format.")
     private String email;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     @Length(min = 8, max = 75, message = "Password must have 8 to 75 characters.")

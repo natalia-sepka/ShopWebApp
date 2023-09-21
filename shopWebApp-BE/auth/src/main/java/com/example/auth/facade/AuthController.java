@@ -1,22 +1,18 @@
 package com.example.auth.facade;
 
-import com.example.auth.entity.AuthResponse;
-import com.example.auth.entity.Code;
-import com.example.auth.entity.User;
-import com.example.auth.entity.UserRegisterDTO;
+import com.example.auth.entity.*;
 import com.example.auth.exceptions.UserExistingWithMail;
 import com.example.auth.exceptions.UserExistingWithName;
 import com.example.auth.services.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -26,7 +22,7 @@ public class AuthController {
     private final UserService userService;
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public ResponseEntity<AuthResponse> addNewUser(@RequestBody UserRegisterDTO user) {
+    public ResponseEntity<AuthResponse> addNewUser(@Valid @RequestBody UserRegisterDTO user) {
         try {
             userService.register(user);
             return ResponseEntity.ok(new AuthResponse(Code.SUCCESS));
@@ -50,5 +46,11 @@ public class AuthController {
         } catch (IllegalArgumentException | ExpiredJwtException e) {
             return ResponseEntity.status(401).body(new AuthResponse(Code.A3));
         }
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ValidationMessage handleValidationExceptions(MethodArgumentNotValidException ex) {
+        return new ValidationMessage(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
     }
 }
