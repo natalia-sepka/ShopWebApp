@@ -29,7 +29,7 @@ public class AuthController {
         } catch (UserExistingWithMail e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(Code.A5));
         } catch (UserExistingWithName e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(Code.A5));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(Code.A4));
         }
     }
 
