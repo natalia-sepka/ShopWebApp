@@ -5,11 +5,13 @@ public enum Code {
     PERMIT("Access granted"),
     A1("Failed to login"),
     A2("No such user"),
-    A3("Empty or expired token");
+    A3("Empty or expired token"),
+    A4("Username already taken"),
+    A5("Email already taken");
 
 
     public final String label;
-    private Code(String label) {
+     Code(String label) {
         this.label = label;
     }
 }
