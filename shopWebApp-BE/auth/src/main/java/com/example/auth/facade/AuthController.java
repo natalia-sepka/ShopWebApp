@@ -43,6 +43,11 @@ public class AuthController {
         return userService.loginByToken(request, response);
     }
 
+    @RequestMapping(path = "/logged-in", method = RequestMethod.GET)
+    public ResponseEntity<?> loggedIn(HttpServletResponse response, HttpServletRequest request) {
+        return userService.loggedIn(request, response);
+    }
+
     @RequestMapping(path = "/validate", method = RequestMethod.GET)
     public ResponseEntity<AuthResponse> validateToken(HttpServletRequest request, HttpServletResponse response) {
         try {

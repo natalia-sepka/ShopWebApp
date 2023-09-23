@@ -142,4 +142,13 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new AuthResponse(Code.A3));
         }
     }
+
+    public ResponseEntity<?> loggedIn(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            validateToken(request, response);
+            return ResponseEntity.ok(new LoginResponse(true));
+        } catch (ExpiredJwtException | IllegalArgumentException e) {
+            return ResponseEntity.ok(new LoginResponse(false));
+        }
+    }
 }
