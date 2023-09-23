@@ -38,6 +38,11 @@ public class AuthController {
         return userService.login(response, user);
     }
 
+    @RequestMapping(path = "/auto-login", method = RequestMethod.GET)
+    public ResponseEntity<?> autoLogin(@RequestBody HttpServletRequest request, HttpServletResponse response) {
+        return userService.loginByToken(request, response);
+    }
+
     @RequestMapping(path = "/validate", method = RequestMethod.GET)
     public ResponseEntity<AuthResponse> validateToken(HttpServletRequest request, HttpServletResponse response) {
         try {

@@ -42,7 +42,6 @@ public class Carousel {
     }
 
     private void initAuthCarousel() {
-        instances = eurekaClient.getApplication("AUTH_SERVICE").getInstances();
+        instances = eurekaClient.getApplication("AUTH-SERVICE").getInstances();
     }
-
 }
