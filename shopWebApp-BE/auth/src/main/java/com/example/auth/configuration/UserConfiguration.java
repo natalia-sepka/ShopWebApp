@@ -29,7 +29,14 @@ public class UserConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/register", "/api/v1/auth/login", "/api/v1/auth/validate").permitAll()
+                .requestMatchers(
+                        "/api/v1/auth/register",
+                        "/api/v1/auth/login",
+                        "/api/v1/auth/validate",
+                        "/api/v1/auth/reset-password",
+                        "/api/v1/auth/activate"
+                )
+                .permitAll()
                 .and()
                 .build();
     }

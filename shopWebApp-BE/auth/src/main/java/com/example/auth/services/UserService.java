@@ -1,6 +1,12 @@
 package com.example.auth.services;
 
-import com.example.auth.entity.*;
+import com.example.auth.entity.User;
+import com.example.auth.entity.UserRegisterDTO;
+import com.example.auth.entity.Role;
+import com.example.auth.entity.AuthResponse;
+import com.example.auth.entity.Code;
+import com.example.auth.entity.LoginResponse;
+import com.example.auth.entity.ChangePasswordData;
 import com.example.auth.exceptions.UserDoesntExistException;
 import com.example.auth.exceptions.UserExistingWithMail;
 import com.example.auth.exceptions.UserExistingWithName;
@@ -87,7 +93,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(HttpServletResponse response, User authRequest) {
-        User user = userRepository.findUserByLogin(authRequest.getUsername()).orElse(null);
+        User user = userRepository.findUserByLoginAndLockAndEnabled(authRequest.getUsername()).orElse(null);
         if (user != null) {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authRequest.getUsername(), authRequest.getPassword()
@@ -161,6 +167,25 @@ public class UserService {
         if (user != null) {
             user.setLock(false);
             userRepository.save(user);
+            return;
+        }
+        throw new UserDoesntExistException("User doesn't exist");
+    }
+
+    public void recoveryPassword(String email) throws UserDoesntExistException {
+        User user = userRepository.findUserByEmail(email).orElse(null);
+        if (user != null) {
+            emailService.sendPasswordRecovery(user);
+            return;
+        }
+        throw new UserDoesntExistException("User doesn't exist");
+    }
+
+    public void resetPassword(ChangePasswordData changePasswordData) {
+        User user = userRepository.findUserByUuid(changePasswordData.getUid()).orElse(null);
+        if (user != null) {
+            user.setPassword(changePasswordData.getPassword());
+            saveUser(user);
             return;
         }
         throw new UserDoesntExistException("User doesn't exist");
