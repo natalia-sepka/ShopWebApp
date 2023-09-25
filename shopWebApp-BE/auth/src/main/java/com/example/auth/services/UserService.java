@@ -1,6 +1,7 @@
 package com.example.auth.services;
 
 import com.example.auth.entity.*;
+import com.example.auth.exceptions.UserDoesntExistException;
 import com.example.auth.exceptions.UserExistingWithMail;
 import com.example.auth.exceptions.UserExistingWithName;
 import com.example.auth.repository.UserRepository;
@@ -28,6 +29,7 @@ public class UserService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final CookieService cookieService;
+    private final EmailService emailService;
     @Value("${jwt.exp}")
     private int exp;
     @Value("${jwt.refresh.exp}")
@@ -75,11 +77,13 @@ public class UserService {
            throw new UserExistingWithMail("User with this email already exists");
         });
         User user = new User();
+        user.setLock(true);
         user.setLogin(userRegisterDTO.getLogin());
         user.setPassword(userRegisterDTO.getPassword());
         user.setEmail(userRegisterDTO.getEmail());
         user.setRole(Role.USER);
         saveUser(user);
+        emailService.sendActivation(user);
     }
 
     public ResponseEntity<?> login(HttpServletResponse response, User authRequest) {
@@ -150,5 +154,15 @@ public class UserService {
         } catch (ExpiredJwtException | IllegalArgumentException e) {
             return ResponseEntity.ok(new LoginResponse(false));
         }
+    }
+
+    public void activateUser(String uid) throws UserDoesntExistException {
+        User user = userRepository.findUserByUuid(uid).orElse(null);
+        if (user != null) {
+            user.setLock(false);
+            userRepository.save(user);
+            return;
+        }
+        throw new UserDoesntExistException("User doesn't exist");
     }
 }
