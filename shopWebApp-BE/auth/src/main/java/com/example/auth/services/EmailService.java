@@ -35,10 +35,10 @@ public class EmailService {
         }
     }
 
-    public void sendPasswordRecovery(User user) {
+    public void sendPasswordRecovery(User user, String uid) {
         try {
             String html = Files.toString(recoveryTemplate.getFile(), Charsets.UTF_8);
-            html = html.replace("https://google.com", frontendUrl + "/email-recovery" + user.getUuid());
+            html = html.replace("https://google.com", frontendUrl + "/email-recovery" + uid);
             emailConfiguration.sendMail(user.getEmail(), html, "Email recovery", true);
         } catch (IOException e) {
             throw new RuntimeException(e);
