@@ -33,3 +33,5 @@ build/
 .vscode/
 
 .DS_Store
+shopWebApp-FE/.angular/cache/
+**/.bin
