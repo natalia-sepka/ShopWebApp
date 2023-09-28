@@ -35,4 +35,5 @@ build/
 **/.DS_Store
 shopWebApp-FE/.angular/cache/
 **/.bin
+shopWebApp-FE/node_modules/
 
