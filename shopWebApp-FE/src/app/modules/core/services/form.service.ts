@@ -1,11 +1,50 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginForm, RegisterForm } from '../models/forms.model';
+import {
+  LoginForm,
+  PasswordRecoveryForm,
+  PasswordsForm,
+  RegisterForm,
+} from '../models/forms.model';
+import { equivalentValidator } from '../../shared/validators/equivalent.validator';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormService {
+  initPasswordRecoveryForm(): FormGroup<PasswordRecoveryForm> {
+    return new FormGroup({
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
+        nonNullable: true,
+      }),
+    });
+  }
+
+  initPasswordsForm(): FormGroup<PasswordsForm> {
+    return new FormGroup(
+      {
+        password: new FormControl('', {
+          validators: [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(50),
+          ],
+          nonNullable: true,
+        }),
+        repeatedPassword: new FormControl('', {
+          validators: [
+            Validators.required,
+            Validators.minLength(5),
+            Validators.maxLength(50),
+          ],
+          nonNullable: true,
+        }),
+      },
+      { validators: [equivalentValidator('password', 'repeatedPassword')] },
+    );
+  }
+
   initLoginForm(): FormGroup<LoginForm> {
     return new FormGroup({
       login: new FormControl('', {
@@ -72,6 +111,9 @@ export class FormService {
     }
     if (control.hasError('email')) {
       return 'Enter valid e-mail address';
+    }
+    if (control.hasError('passwordNotEqual')) {
+      return 'Passwords must be equal';
     }
     return '';
   }
