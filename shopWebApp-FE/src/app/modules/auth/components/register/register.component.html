@@ -1,5 +1,5 @@
 
-<form [formGroup]="registerForm">
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
   <div class='form-input'>
     <mat-form-field appearance='fill'>
       <mat-label>E-mail</mat-label>
@@ -30,6 +30,17 @@
   </div>
   <div class='d-flex justify-content-end'>
     <button mat-raised-button color='primary' [disabled]="registerForm.invalid">Sign up</button>
+    <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" *ngIf="noMatchingPasswordErr">
+      {{ noMatchingPasswordErr }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" (click)="noMatchingPasswordErr = null"></button>
+    </div>
+  </div>
+  <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert" *ngIf="errorMsg$ | async as error">
+    {{ error }}
+  </div>
+  <div class="mt-2" *ngIf="loading$ | async">
+<!--    todo add spinner-->
+    Your request is being processed...
   </div>
 </form>
 
