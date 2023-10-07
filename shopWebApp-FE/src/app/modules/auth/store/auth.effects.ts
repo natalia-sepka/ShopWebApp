@@ -13,8 +13,31 @@ export class AuthEffects {
       ofType(AuthActions.login),
       switchMap((action) => {
         return this.authService.login(action.loginData).pipe(
-          map((user) => AuthActions.loginSuccess({ user: { ...user } })),
+          map((user) => {
+            this.router.navigate(['/']);
+            this.notifierService.notify('success', 'Login success!');
+            return AuthActions.loginSuccess({ user: { ...user } });
+          }),
           catchError((err) => of(AuthActions.loginFailure({ error: err }))),
+        );
+      }),
+    );
+  });
+
+  logout$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AuthActions.logout),
+      switchMap(() => {
+        return this.authService.logout().pipe(
+          map(() => {
+            this.router.navigate(['/login']);
+            this.notifierService.notify('success', 'Logout success!');
+            return AuthActions.logoutSuccess();
+          }),
+          catchError((err) => {
+            this.notifierService.notify('warning', err);
+            return of(AuthActions.logoutFailure());
+          }),
         );
       }),
     );

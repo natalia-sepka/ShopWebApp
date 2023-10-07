@@ -117,6 +117,21 @@ public class UserService {
         return ResponseEntity.ok(new AuthResponse(Code.A2));
     }
 
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
+        Cookie cookie = cookieService.removeCookie(request.getCookies(),"Authorization");
+        System.out.println(" PO USUNIĘCIU " + cookie);
+        if (cookie != null){
+            response.addCookie(cookie);
+        }
+        cookie = cookieService.removeCookie(request.getCookies(),"refresh");
+        System.out.println(" PO USUNIĘCIU " + cookie);
+        if (cookie != null){
+            response.addCookie(cookie);
+        }
+        return  ResponseEntity.ok(new AuthResponse(Code.SUCCESS));
+    }
+
+
     public void setAsAdmin(UserRegisterDTO user) {
         userRepository.findUserByLogin(user.getLogin()).ifPresent( value -> {
             value.setRole(Role.ADMIN);
@@ -165,6 +180,7 @@ public class UserService {
         User user = userRepository.findUserByUuid(uid).orElse(null);
         if (user != null) {
             user.setLock(false);
+            user.setEnabled(true);
             userRepository.save(user);
             return;
         }

@@ -24,7 +24,7 @@ const routes: Routes = [
     component: PasswordRecoveryFormComponent,
   },
   {
-    path: 'active/:uid',
+    path: 'activate/:uid',
     component: AccountActivationComponent,
   },
 ];

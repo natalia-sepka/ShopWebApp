@@ -36,6 +36,7 @@ public class AuthController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public ResponseEntity<?> login(@RequestBody User user, HttpServletResponse response) {
+        System.out.println(user.getUsername());
         return userService.login(response, user);
     }
 
@@ -48,6 +49,12 @@ public class AuthController {
     public ResponseEntity<?> loggedIn(HttpServletResponse response, HttpServletRequest request) {
         return userService.loggedIn(request, response);
     }
+
+    @RequestMapping(path = "/logout",method = RequestMethod.GET)
+    public ResponseEntity<?> logout( HttpServletResponse response, HttpServletRequest request){
+        return userService.logout(request, response);
+    }
+
 
     @RequestMapping(path = "/validate", method = RequestMethod.GET)
     public ResponseEntity<AuthResponse> validateToken(HttpServletRequest request, HttpServletResponse response) {
