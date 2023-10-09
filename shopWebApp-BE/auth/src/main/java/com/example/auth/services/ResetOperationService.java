@@ -1,7 +1,7 @@
 package com.example.auth.services;
 
 import com.example.auth.entity.ResetOperations;
-import com.example.auth.entity.ResetOperationsRepository;
+import com.example.auth.repository.ResetOperationsRepository;
 import com.example.auth.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ public class ResetOperationService {
         ResetOperations resetOperations = new ResetOperations();
 
         resetOperations.setUid(UUID.randomUUID().toString());
-        resetOperations.setCreateDate(new Timestamp(System.currentTimeMillis()).toString());
+        resetOperations.setCreateDate(new Timestamp(System.currentTimeMillis()));
         resetOperations.setUser(user);
 
         resetOperationsRepository.deleteAllByUser(user);

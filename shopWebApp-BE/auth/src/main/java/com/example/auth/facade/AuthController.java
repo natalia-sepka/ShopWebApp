@@ -86,7 +86,8 @@ public class AuthController {
         }
     }
 
-    @RequestMapping(path = "/reset-password", method = RequestMethod.PATCH)
+    //@RequestMapping(path = "/reset-password", method = RequestMethod.PATCH)
+    @PatchMapping(value = "/reset-password")
     public ResponseEntity<AuthResponse> recoveryEmail(@RequestBody ChangePasswordData changePasswordData) {
         try {
             userService.resetPassword(changePasswordData);

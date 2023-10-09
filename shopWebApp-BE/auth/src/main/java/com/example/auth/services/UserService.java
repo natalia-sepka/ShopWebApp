@@ -4,6 +4,7 @@ import com.example.auth.entity.*;
 import com.example.auth.exceptions.UserDoesntExistException;
 import com.example.auth.exceptions.UserExistingWithMail;
 import com.example.auth.exceptions.UserExistingWithName;
+import com.example.auth.repository.ResetOperationsRepository;
 import com.example.auth.repository.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
@@ -201,7 +202,7 @@ public class UserService {
     public void resetPassword(ChangePasswordData changePasswordData) throws UserDoesntExistException{
         ResetOperations resetOperations = resetOperationsRepository.findByUid(changePasswordData.getUid()).orElse(null);
         if (resetOperations != null) {
-            User user = userRepository.findUserByUuid(changePasswordData.getUid()).orElse(null);
+            User user = userRepository.findUserByUuid(resetOperations.getUser().getUuid()).orElse(null);
             if (user != null) {
                 user.setPassword(changePasswordData.getPassword());
                 saveUser(user);

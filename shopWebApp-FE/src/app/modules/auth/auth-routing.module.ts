@@ -16,11 +16,11 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path: 'recover-password',
+    path: 'reset-password',
     component: PasswordRecoveryComponent,
   },
   {
-    path: 'recover-password/:uid',
+    path: 'reset-password/:uid',
     component: PasswordRecoveryFormComponent,
   },
   {
