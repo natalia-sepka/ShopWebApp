@@ -35,7 +35,8 @@ public class UserConfiguration {
                         "/api/v1/auth/logout",
                         "/api/v1/auth/validate",
                         "/api/v1/auth/reset-password",
-                        "/api/v1/auth/activate"
+                        "/api/v1/auth/activate",
+                        "/api/v1/auth/logged-in"
                 )
                 .permitAll()
                 .and()

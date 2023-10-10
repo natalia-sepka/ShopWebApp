@@ -120,12 +120,10 @@ public class UserService {
 
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
         Cookie cookie = cookieService.removeCookie(request.getCookies(),"Authorization");
-        System.out.println(" PO USUNIĘCIU " + cookie);
         if (cookie != null){
             response.addCookie(cookie);
         }
         cookie = cookieService.removeCookie(request.getCookies(),"refresh");
-        System.out.println(" PO USUNIĘCIU " + cookie);
         if (cookie != null){
             response.addCookie(cookie);
         }

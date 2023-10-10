@@ -5,6 +5,7 @@ import {
   AuthResponse,
   ChangePasswordData,
   IUser,
+  LoggedInResponse,
   LoginData,
   RegisterData,
   ResetPasswordData,
@@ -26,6 +27,12 @@ export class AuthService {
 
   logout(): Observable<AuthResponse> {
     return this.http.get<AuthResponse>(`${this.apiUrl}/logout`, {
+      withCredentials: true,
+    });
+  }
+
+  isLoggedIn(): Observable<LoggedInResponse> {
+    return this.http.get<LoggedInResponse>(`${this.apiUrl}/logged-in`, {
       withCredentials: true,
     });
   }
