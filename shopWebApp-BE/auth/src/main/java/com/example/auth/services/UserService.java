@@ -102,9 +102,7 @@ public class UserService {
                 Cookie refresh = cookieService.generateCookie("refresh", generateToken(authRequest.getUsername(), refreshExp), refreshExp);
                 Cookie cookie = cookieService.generateCookie("Authorization", generateToken(authRequest.getUsername(), exp), exp);
                 response.addCookie(cookie);
-                System.out.println("--login success --authorization--" + cookie);
                 response.addCookie(refresh);
-                System.out.println("--login success --refresh--" + refresh);
                 return ResponseEntity.ok(
                         UserRegisterDTO
                                 .builder()

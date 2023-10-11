@@ -29,7 +29,6 @@ export class UnauthGuard implements CanActivate {
       take(1),
       map((resp) => {
         const isLoggedIn = resp.message;
-        console.log(isLoggedIn);
         if (isLoggedIn) {
           this.router.navigate(['/']);
           return false;
