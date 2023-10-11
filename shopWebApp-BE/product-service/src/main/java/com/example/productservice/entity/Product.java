@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Map;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -21,7 +20,7 @@ public class Product {
     private String mainDesc;
     private String descHtml;
     private float price;
-    private Set<String> imageUrls;
+    private String[] imageUrls;
     private Map<String, String> parameters;
     private LocalDate createAd;
 }
