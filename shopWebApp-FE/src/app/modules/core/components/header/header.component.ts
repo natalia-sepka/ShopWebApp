@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.reducer';
 import * as AuthActions from '../../../auth/store/auth.actions';
+import { Observable } from 'rxjs';
+import { User } from '../../models/auth.model';
+import { selectAuthUser } from '../../../auth/store/auth.selectors';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +12,7 @@ import * as AuthActions from '../../../auth/store/auth.actions';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  user$: Observable<User | null> = this.store.select(selectAuthUser);
   constructor(private store: Store<AppState>) {}
   logout() {
     this.store.dispatch(AuthActions.logout());

@@ -102,7 +102,9 @@ public class UserService {
                 Cookie refresh = cookieService.generateCookie("refresh", generateToken(authRequest.getUsername(), refreshExp), refreshExp);
                 Cookie cookie = cookieService.generateCookie("Authorization", generateToken(authRequest.getUsername(), exp), exp);
                 response.addCookie(cookie);
+                System.out.println("--login success --authorization--" + cookie);
                 response.addCookie(refresh);
+                System.out.println("--login success --refresh--" + refresh);
                 return ResponseEntity.ok(
                         UserRegisterDTO
                                 .builder()
@@ -120,11 +122,11 @@ public class UserService {
 
     public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
         Cookie cookie = cookieService.removeCookie(request.getCookies(),"Authorization");
-        if (cookie != null){
+        if (cookie != null) {
             response.addCookie(cookie);
         }
         cookie = cookieService.removeCookie(request.getCookies(),"refresh");
-        if (cookie != null){
+        if (cookie != null) {
             response.addCookie(cookie);
         }
         return  ResponseEntity.ok(new AuthResponse(Code.SUCCESS));
@@ -153,7 +155,6 @@ public class UserService {
                 return ResponseEntity.ok(
                         UserRegisterDTO
                                 .builder()
-
                                 .login(user.getUsername())
                                 .email(user.getEmail())
                                 .role(user.getRole())

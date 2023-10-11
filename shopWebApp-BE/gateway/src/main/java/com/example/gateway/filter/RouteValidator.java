@@ -14,7 +14,9 @@ public class RouteValidator {
             "/auth/validate",
             "/auth/register",
             "/auth/activate",
-            "/auth/reset-password"
+            "/auth/reset-password",
+            "/auth/auto-login",
+            "/auth/logged-in"
     );
 
     public Predicate<ServerHttpRequest> isSecure =

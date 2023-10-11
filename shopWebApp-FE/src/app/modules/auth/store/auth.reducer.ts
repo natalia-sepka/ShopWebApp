@@ -31,6 +31,16 @@ const _authReducer = createReducer(
     loading: false,
     error: action.error,
   })),
+  on(AuthActions.autoLogin, (state, action) => ({
+    ...state,
+  })),
+  on(AuthActions.autoLoginSuccess, (state, action) => ({
+    ...state,
+    user: new User(action.user.login, action.user.email, action.user.role),
+  })),
+  on(AuthActions.autoLoginFailure, (state, action) => ({
+    ...state,
+  })),
   on(AuthActions.logout, (state, action) => ({
     ...state,
   })),

@@ -40,7 +40,7 @@ public class AuthController {
     }
 
     @RequestMapping(path = "/auto-login", method = RequestMethod.GET)
-    public ResponseEntity<?> autoLogin(@RequestBody HttpServletRequest request, HttpServletResponse response) {
+    public ResponseEntity<?> autoLogin(HttpServletRequest request, HttpServletResponse response) {
         return userService.loginByToken(request, response);
     }
 
@@ -85,7 +85,6 @@ public class AuthController {
         }
     }
 
-    //@RequestMapping(path = "/reset-password", method = RequestMethod.PATCH)
     @PatchMapping(value = "/reset-password")
     public ResponseEntity<AuthResponse> recoveryEmail(@RequestBody ChangePasswordData changePasswordData) {
         try {
