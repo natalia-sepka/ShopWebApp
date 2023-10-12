@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 public class ProductMediator {
     private final ProductService productService;
     public ResponseEntity<?> getProduct(int page, int limit) {
-        return null;
+        long totalCount = productService.countActiveProducts();
+        return ResponseEntity.ok().header("X-Total-Count", String.valueOf(totalCount)).body("");
     }
 }

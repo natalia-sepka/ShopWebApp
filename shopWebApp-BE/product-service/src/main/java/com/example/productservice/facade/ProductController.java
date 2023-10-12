@@ -19,7 +19,6 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "0") int page,
             @RequestParam(required = false, defaultValue = "10") int limit
             ) {
-        productMediator.getProduct(page, limit);
-        return null;
+        return productMediator.getProduct(page, limit);
     }
 }
