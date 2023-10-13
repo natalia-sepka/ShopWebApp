@@ -1,7 +1,7 @@
 package com.example.productservice.service;
 
-import com.example.productservice.entity.ProductDTO;
 import com.example.productservice.entity.ProductEntity;
+import com.example.productservice.repository.CategoryRepository;
 import com.example.productservice.repository.ProductRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -25,6 +25,8 @@ public class ProductService {
     EntityManager entityManager;
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+
 
     public long countActiveProducts() {
         return productRepository.countActiveProducts();
@@ -44,7 +46,9 @@ public class ProductService {
             predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
         }
         if (category != null && !category.equals("")) {
-            predicates.add(criteriaBuilder.equal(root.get("category"), category));
+            categoryRepository.findByShortId(category).ifPresent(
+                    value -> predicates.add(criteriaBuilder.equal(root.get("category"), value))
+            );
         }
         if (minPrice != null) {
             predicates.add(criteriaBuilder.greaterThan(root.get("price"), minPrice - 0.01));
