@@ -16,9 +16,14 @@ public class ProductController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> get(
             HttpServletRequest request,
-            @RequestParam(required = false, defaultValue = "0") int page,
-            @RequestParam(required = false, defaultValue = "10") int limit
+            @RequestParam(required = false) String name_like,
+            @RequestParam(required = false) String data,
+            @RequestParam(required = false) String _category,
+            @RequestParam(required = false) Float minPrice,
+            @RequestParam(required = false) Float maxPrice,
+            @RequestParam(required = false, defaultValue = "0") int _page,
+            @RequestParam(required = false, defaultValue = "10") int _limit
             ) {
-        return productMediator.getProduct(page, limit);
+        return productMediator.getProduct(_page, _limit, name_like, _category, minPrice, maxPrice, data);
     }
 }
