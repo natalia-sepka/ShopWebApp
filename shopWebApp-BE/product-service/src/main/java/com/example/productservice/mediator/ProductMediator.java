@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 @Component
@@ -35,6 +37,13 @@ public class ProductMediator {
                 sort,
                 order
         );
+        if (name != null && !name.isEmpty()) {
+            try {
+                name = URLDecoder.decode(name, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return ResponseEntity.ok().header("X-Total-Count", String.valueOf(totalCount)).body(product);
     }
 }
