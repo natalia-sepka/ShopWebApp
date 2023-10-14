@@ -1,9 +1,6 @@
 package com.example.productservice.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -16,6 +13,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 public class ProductEntity extends Product {
+    @Id
+    @GeneratedValue(generator = "products_id_seq", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "products_id_seq", sequenceName = "products_id_seq", allocationSize = 1)
+    private long id;
+
     @ManyToOne
     @JoinColumn(name = "category_parameters")
     private Category category;
@@ -33,8 +35,9 @@ public class ProductEntity extends Product {
             LocalDate createAt,
             Category category
     ) {
-        super(id, uid, activate, name, mainDesc, descHtml, price, imageUrls, parameters, createAt);
+        super(uid, activate, name, mainDesc, descHtml, price, imageUrls, parameters, createAt);
         this.category = category;
+        this.id = id;
     }
 
 }
