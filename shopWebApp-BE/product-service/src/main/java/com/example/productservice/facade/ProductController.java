@@ -21,9 +21,11 @@ public class ProductController {
             @RequestParam(required = false) String _category,
             @RequestParam(required = false) Float minPrice,
             @RequestParam(required = false) Float maxPrice,
-            @RequestParam(required = false, defaultValue = "0") int _page,
-            @RequestParam(required = false, defaultValue = "10") int _limit
+            @RequestParam(required = false, defaultValue = "1") int _page,
+            @RequestParam(required = false, defaultValue = "10") int _limit,
+            @RequestParam(required = false, defaultValue = "price") String _sort,
+            @RequestParam(required = false, defaultValue = "asc") String _order
             ) {
-        return productMediator.getProduct(_page, _limit, name_like, _category, minPrice, maxPrice, data);
+        return productMediator.getProduct(_page, _limit, name_like, _category, minPrice, maxPrice, data, _sort, _order);
     }
 }

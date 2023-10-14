@@ -27,5 +27,5 @@ public class Product {
     private float price;
     private String[] imageUrls;
     private String parameters;
-    private LocalDate createAd;
+    private LocalDate createAt;
 }
