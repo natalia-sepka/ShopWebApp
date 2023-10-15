@@ -109,7 +109,7 @@ public class ProductService {
         if (maxPrice != null) {
             predicates.add(criteriaBuilder.lessThan(root.get("price"), minPrice + 0.01));
         }
-        predicates.add(criteriaBuilder.isTrue(root.get("active")));
+        predicates.add(criteriaBuilder.isTrue(root.get("activate")));
         return predicates;
     }
 }

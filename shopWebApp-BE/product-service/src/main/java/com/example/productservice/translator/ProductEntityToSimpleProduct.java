@@ -2,7 +2,6 @@ package com.example.productservice.translator;
 
 import com.example.productservice.entity.ProductEntity;
 import com.example.productservice.entity.SimpleProductDTO;
-import lombok.RequiredArgsConstructor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

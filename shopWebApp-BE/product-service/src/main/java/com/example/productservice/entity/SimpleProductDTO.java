@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class SimpleProductDTO {
     private String name;
-    private String description;
+    private String mainDesc;
     private float price;
     private String imageUrl;
     private LocalDate createAt;
