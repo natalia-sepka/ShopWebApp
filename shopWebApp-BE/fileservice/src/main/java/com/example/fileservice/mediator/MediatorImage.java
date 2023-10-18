@@ -32,4 +32,17 @@ public class MediatorImage {
         }
 
     }
+
+    public ResponseEntity<ImageResponse> deleteImage(String uuid) {
+        try {
+            ImageEntity imageEntity = imageService.findByUuid(uuid);
+            if (imageEntity != null) {
+                ftpService.deleteFile(imageEntity.getPath());
+                return ResponseEntity.ok(new ImageResponse("File was deleted."));
+            }
+            return ResponseEntity.ok(new ImageResponse("File does not exist."));
+        } catch (IOException e) {
+            return ResponseEntity.status(400).body(new ImageResponse("Can not delete file."));
+        }
+    }
 }

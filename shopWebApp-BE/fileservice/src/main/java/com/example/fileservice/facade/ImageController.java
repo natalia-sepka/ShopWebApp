@@ -1,12 +1,10 @@
 package com.example.fileservice.facade;
 
+import com.example.fileservice.entity.ImageResponse;
 import com.example.fileservice.mediator.MediatorImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
@@ -19,5 +17,10 @@ public class ImageController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> saveFile(@RequestBody MultipartFile multipartFile) {
        return mediatorImage.saveImage(multipartFile);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    public ResponseEntity<ImageResponse> deleteFile(@RequestParam String uuid) {
+        return mediatorImage.deleteImage(uuid);
     }
 }
