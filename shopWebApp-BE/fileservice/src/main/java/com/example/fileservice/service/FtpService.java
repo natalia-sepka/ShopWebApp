@@ -1,6 +1,7 @@
 package com.example.fileservice.service;
 
-import com.example.fileservice.facade.entity.ImageEntity;
+import com.example.fileservice.entity.ImageEntity;
+import com.example.fileservice.exceptions.FtpConnException;
 import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,7 @@ public class FtpService {
         return ftpClient;
     }
 
-    public ImageEntity uploadFileToFtp(MultipartFile file) throws RuntimeException {
+    public ImageEntity uploadFileToFtp(MultipartFile file) throws RuntimeException, IOException {
         try {
             FTPClient ftpClient = getFtpConnection();
             String remoteFilePath = FTP_ORIGIN_DIRECTORY + "/" + LocalDate.now()+ "/" + file.getOriginalFilename();
@@ -45,7 +46,7 @@ public class FtpService {
             if (!uploaded) {
                 createDirectory(ftpClient);
               if (streamFile(file, ftpClient, remoteFilePath)) {
-                  throw new RuntimeException();
+                  throw new FtpConnException("Can not connect to the server");
               }
             }
             ftpClient.logout();
@@ -57,7 +58,7 @@ public class FtpService {
                     .isUsed(false)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FtpConnException("");
         }
     }
 
