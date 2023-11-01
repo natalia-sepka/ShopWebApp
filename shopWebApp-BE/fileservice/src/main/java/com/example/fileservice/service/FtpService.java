@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -79,5 +80,17 @@ public class FtpService {
         ftpClient.logout();
         ftpClient.disconnect();
         return deleted;
+    }
+
+    public ByteArrayOutputStream getFile(ImageEntity imageEntity) throws IOException {
+        FTPClient ftpClient = getFtpConnection();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        boolean download = ftpClient.retrieveFile(imageEntity.getPath(), outputStream);
+        ftpClient.logout();
+        ftpClient.disconnect();
+        if (download) {
+            return outputStream;
+        }
+        throw new FtpConnException("Can not download file");
     }
 }
