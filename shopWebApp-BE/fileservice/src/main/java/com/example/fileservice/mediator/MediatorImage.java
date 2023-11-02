@@ -64,4 +64,14 @@ public class MediatorImage {
         }
         return ResponseEntity.status(400).body(new ImageResponse("File does not exist."));
     }
+
+    public ResponseEntity<ImageResponse> activateImage(String uuid) {
+        ImageEntity imageEntity = imageService.findByUuid(uuid);
+        if (imageEntity != null) {
+            imageEntity.setUsed(true);
+            imageService.save(imageEntity);
+            return ResponseEntity.ok(new ImageResponse("Image successfully activated"));
+        }
+        return ResponseEntity.status(400).body(new ImageResponse("File does not exist"));
+    }
 }

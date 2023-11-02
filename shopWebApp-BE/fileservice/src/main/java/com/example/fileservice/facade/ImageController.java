@@ -30,4 +30,9 @@ public class ImageController {
     public ResponseEntity<?> getFile(@RequestParam String uuid) throws IOException {
         return mediatorImage.getImage(uuid);
     }
+
+    @RequestMapping(method = RequestMethod.PATCH)
+    public ResponseEntity<ImageResponse> activeImage(@RequestParam String uuid) {
+        return mediatorImage.activateImage(uuid);
+    }
 }
