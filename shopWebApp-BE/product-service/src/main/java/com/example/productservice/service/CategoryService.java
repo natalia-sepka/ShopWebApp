@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,5 +30,9 @@ public class CategoryService {
             throw new ObjectExistsDBException("Category with this name already exists in the database");
         });
         categoryRepository.save(category);
+    }
+
+    public Optional<Category> findCategoryByShortId(String shortId) {
+        return categoryRepository.findByShortId(shortId);
     }
 }

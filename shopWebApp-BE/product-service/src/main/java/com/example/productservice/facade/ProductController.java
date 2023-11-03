@@ -1,5 +1,7 @@
 package com.example.productservice.facade;
 
+import com.example.productservice.entity.ProductFormDTO;
+import com.example.productservice.entity.Response;
 import com.example.productservice.mediator.ProductMediator;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +29,10 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "asc") String _order
             ) {
         return productMediator.getProduct(_page, _limit, name_like, _category, minPrice, maxPrice, data, _sort, _order);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Response> save(@RequestBody ProductFormDTO productFormDTO) {
+        return productMediator.saveProduct(productFormDTO);
     }
 }
