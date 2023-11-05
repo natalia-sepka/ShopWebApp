@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.net.URI;
@@ -149,5 +150,23 @@ public class ProductService {
         } catch (IOException | InterruptedException e ) {
             throw new RuntimeException();
         }
+    }
+
+    @Transactional
+    public void delete(String uuid) throws RuntimeException {
+        productRepository.findByUuid(uuid).ifPresentOrElse( value -> {
+            for (String image : value.getImageUrls()) {
+                deleteImages(image);
+            }
+            value.setActivate(false);
+            productRepository.save(value);
+        }, () -> {
+            throw new RuntimeException();
+        });
+    }
+
+    public void deleteImages(String uuid) {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(FILE_SERVICE + "?uuid" + uuid);
     }
 }

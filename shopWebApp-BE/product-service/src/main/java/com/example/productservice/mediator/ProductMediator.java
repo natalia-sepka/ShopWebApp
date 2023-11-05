@@ -77,4 +77,13 @@ public class ProductMediator {
             return ResponseEntity.status(400).body(new Response("Can't create product. Category doesn't exist."));
         }
     }
+
+    public ResponseEntity<Response> deleteProduct(String uuid) {
+        try {
+            productService.delete(uuid);
+            return ResponseEntity.ok(new Response("Product sucessfully deleted"));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(400).body(new Response("Product doesn't exist"));
+        }
+    }
 }
