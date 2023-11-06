@@ -30,7 +30,7 @@ public class ProductService {
     @PersistenceContext
     EntityManager entityManager;
 
-    @Value("$file-service.url")
+    @Value("${file-service.url}")
     private String FILE_SERVICE;
 
     private final ProductRepository productRepository;
@@ -154,7 +154,7 @@ public class ProductService {
 
     @Transactional
     public void delete(String uuid) throws RuntimeException {
-        productRepository.findByUuid(uuid).ifPresentOrElse( value -> {
+        productRepository.findByUid(uuid).ifPresentOrElse( value -> {
             for (String image : value.getImageUrls()) {
                 deleteImages(image);
             }

@@ -8,6 +8,7 @@ import com.example.productservice.translator.ProductEntityToProductDTO;
 import com.example.productservice.translator.ProductEntityToSimpleProduct;
 import com.example.productservice.translator.ProductFormToProductEntity;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,10 @@ public class ProductMediator {
     private final ProductEntityToSimpleProduct productEntityToSimpleProduct;
     private final ProductEntityToProductDTO productEntityToProductDTO;
     private final ProductFormToProductEntity productFormToProductEntity;
+
+    @Value("${file-service.url}")
+    private String FILE_SERVICE;
+
     public ResponseEntity<?> getProduct(
             int page,
             int limit,
@@ -46,6 +51,11 @@ public class ProductMediator {
                 sort,
                 order
         );
+        product.forEach( value -> {
+            for (int i = 0; i < value.getImageUrls().length; i++) {
+                value.getImageUrls()[i] = FILE_SERVICE + value.getImageUrls()[i];
+            }
+        });
         if (name != null && !name.isEmpty()) {
             try {
                 name = URLDecoder.decode(name, "UTF-8");
@@ -81,7 +91,7 @@ public class ProductMediator {
     public ResponseEntity<Response> deleteProduct(String uuid) {
         try {
             productService.delete(uuid);
-            return ResponseEntity.ok(new Response("Product sucessfully deleted"));
+            return ResponseEntity.ok(new Response("Product successfully deleted"));
         } catch (RuntimeException e) {
             return ResponseEntity.status(400).body(new Response("Product doesn't exist"));
         }
