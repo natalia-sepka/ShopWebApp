@@ -55,6 +55,12 @@
             <artifactId>mapstruct</artifactId>
             <version>1.5.0.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>RegisterEndpointInformation</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
