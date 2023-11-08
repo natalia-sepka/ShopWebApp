@@ -209,4 +209,28 @@ public class UserService {
         }
         throw new UserDoesntExistException("User doesn't exist");
     }
+
+    public void authorize(HttpServletRequest request) throws UserDoesntExistException {
+        String token = null;
+        String refresh = null;
+        if (request.getCookies() != null) {
+            for (Cookie value: Arrays.stream(request.getCookies()).toList()) {
+                if (value.getName().equals("Authorization")) {
+                    token = value.getValue();
+                } else if (value.getName().equals("refresh")) {
+                    refresh = value.getValue();
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Token can not be null");
+        }
+        if (token != null && !token.isEmpty()) {
+            String subject = jwtService.getSubject(token);
+            userRepository.findUserByLoginAndLockAndEnabled(subject).orElseThrow(() -> new UserDoesntExistException("User not found"));
+        } else if (refresh != null && !refresh.isEmpty()) {
+            String subject = jwtService.getSubject(refresh);
+            userRepository.findUserByLoginAndLockAndEnabled(subject).orElseThrow(() -> new UserDoesntExistException("User not found"));
+
+        }
+    }
 }
