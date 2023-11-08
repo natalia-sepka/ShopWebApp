@@ -9,6 +9,19 @@
         <li class="nav-item">
           <a class="nav-link" aria-current="page" routerLink="" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" routerLink="/products">
+            Products
+          </a>
+          <ul class="dropdown-menu">
+            <ng-container *ngFor="let category of categories; let last = last">
+              <li><a class="dropdown-item" [routerLink]="">{{category.name}}</a></li>
+              <li *ngIf="!last">
+                <hr class="dropdown-divider"></li>
+            </ng-container>
+          </ul>
+        </li>
         <ng-container *ngIf="user$ | async; else notUser">
           <li class="nav-item">
             <button mat-raised-button color="primary" (click)="logout()">Log out</button>
