@@ -18,10 +18,17 @@ export class ProductsService {
   getProducts(
     pageIndex = 1,
     itemsPerPage = 5,
+    name: string | null = null,
   ): Observable<GetProductsResponse> {
-    const params = new HttpParams()
+    let params = new HttpParams()
       .append('_page', pageIndex)
       .append('_limit', itemsPerPage);
+
+    if (name) {
+      //const newName = encodeURIComponent(name);
+      params = params.append('name_like', name);
+    }
+
     return this.http
       .get<PrimitiveProduct[]>(`${this.apiUrl}`, {
         observe: 'response',

@@ -1,4 +1,24 @@
 <section>
+  <div class="autocomplete-search">
+    <mat-form-field>
+      <mat-label>Search for product</mat-label>
+      <input
+      type="text"
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+    <div class="d-flex justify-content-end my-2">
+      <button mat-raised-button color="primary" (click)="searchProducts()">
+      Search
+      </button>
+    </div>
+  </div>
   <div class="products-list">
     <app-product *ngFor="let product of products" [product]="product"></app-product>
   </div>

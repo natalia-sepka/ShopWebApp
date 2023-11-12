@@ -24,7 +24,8 @@ public class RouteValidator {
             new Endpoint("/auth/reset-password", HttpMethod.POST, Role.GUEST),
             new Endpoint("/api/v1/gateway", HttpMethod.POST, Role.GUEST),
             new Endpoint("/api/v1/auto-login", HttpMethod.GET, Role.GUEST),
-            new Endpoint("/api/v1/logged-in", HttpMethod.GET, Role.GUEST)
+            new Endpoint("/api/v1/logged-in", HttpMethod.GET, Role.GUEST),
+            new Endpoint("/api/v1/product", HttpMethod.GET, Role.GUEST)
     ));
 
     private Set<Endpoint> adminEndpoints = new HashSet<>();
