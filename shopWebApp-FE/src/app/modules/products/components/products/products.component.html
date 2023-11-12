@@ -13,6 +13,26 @@
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
+    <div class="searched-params">
+      <mat-form-field>
+        <mat-label>Sort by</mat-label>
+          <mat-select [formControl]="sortControl">
+            <mat-option value="">-</mat-option>
+            <mat-option value="price">Price</mat-option>
+            <mat-option value="category">Category</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="data">Date added</mat-option>
+          </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Sort</mat-label>
+        <mat-select [formControl]="orderControl">
+          <mat-option value="">-</mat-option>
+          <mat-option value="asd">Ascending</mat-option>
+          <mat-option value="desc">Descending</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
     <div class="d-flex justify-content-end my-2">
       <button mat-raised-button color="primary" (click)="searchProducts()">
       Search

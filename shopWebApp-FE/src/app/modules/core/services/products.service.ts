@@ -19,6 +19,8 @@ export class ProductsService {
     pageIndex = 1,
     itemsPerPage = 5,
     name: string | null = null,
+    sortElement: string | null = null,
+    order: string | null = null,
   ): Observable<GetProductsResponse> {
     let params = new HttpParams()
       .append('_page', pageIndex)
@@ -27,6 +29,14 @@ export class ProductsService {
     if (name) {
       //const newName = encodeURIComponent(name);
       params = params.append('name_like', name);
+    }
+
+    if (sortElement) {
+      params = params.append('_sort', sortElement);
+    }
+
+    if (order) {
+      params = params.append('_order', order);
     }
 
     return this.http

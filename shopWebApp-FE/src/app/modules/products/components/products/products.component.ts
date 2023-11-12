@@ -28,8 +28,11 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   products: PrimitiveProduct[] = [];
   totalCount = 0;
   sub = new Subscription();
+
   errorMsg: string | null = null;
   searchControl = new FormControl<string>('');
+  sortControl = new FormControl<string>('');
+  orderControl = new FormControl<string>('');
   filteredOptions!: Observable<PrimitiveProduct[]>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -71,10 +74,19 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
           const productName = queryMap.get('name')
             ? queryMap.get('name')
             : null;
+
+          const sortElement = queryMap.get('sort_by')
+            ? queryMap.get('sort_by')
+            : null;
+
+          const order = queryMap.get('sort') ? queryMap.get('sort') : null;
+
           return this.productService.getProducts(
             pageIndex,
             itemsPerPage,
             productName,
+            sortElement,
+            order,
           );
         }),
         map(({ products, totalCount }) => {
@@ -91,16 +103,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sub.add(
       this.paginator.page.subscribe({
         next: () => {
-          const pageIndex = this.paginator.pageIndex + 1;
-          const itemsPerPage = this.paginator.pageSize;
-          this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-              page: pageIndex,
-              limit: itemsPerPage,
-              name: encodeURIComponent(this.searchControl.value as string),
-            },
-          });
+          this.navigateToSearchParams();
         },
       }),
     );
@@ -113,13 +116,30 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   searchProducts() {
     this.paginator.pageIndex = 0;
     this.paginator.pageSize = 5;
+    this.navigateToSearchParams();
+  }
+
+  navigateToSearchParams() {
+    const queryParams: { [key: string]: string | number } = {
+      page: this.paginator.pageIndex + 1,
+      limit: this.paginator.pageSize,
+    };
+
+    if (this.searchControl.value) {
+      queryParams['name'] = this.searchControl.value;
+    }
+
+    if (this.sortControl.value) {
+      queryParams['sort_by'] = this.sortControl.value;
+    }
+
+    if (this.orderControl.value) {
+      queryParams['sort'] = this.orderControl.value;
+    }
+
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: {
-        page: this.paginator.pageIndex + 1,
-        limit: this.paginator.pageSize,
-        name: encodeURIComponent(this.searchControl.value as string),
-      },
+      queryParams,
     });
   }
 }
