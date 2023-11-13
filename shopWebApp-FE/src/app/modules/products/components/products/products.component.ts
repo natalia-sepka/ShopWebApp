@@ -81,12 +81,17 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
 
           const order = queryMap.get('sort') ? queryMap.get('sort') : null;
 
+          const category = queryMap.get('category')
+            ? queryMap.get('category')
+            : null;
+
           return this.productService.getProducts(
             pageIndex,
             itemsPerPage,
             productName,
             sortElement,
             order,
+            category,
           );
         }),
         map(({ products, totalCount }) => {
@@ -124,6 +129,12 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       page: this.paginator.pageIndex + 1,
       limit: this.paginator.pageSize,
     };
+
+    const category = this.route.snapshot.queryParamMap.get('category');
+
+    if (category) {
+      queryParams['category'] = category;
+    }
 
     if (this.searchControl.value) {
       queryParams['name'] = this.searchControl.value;

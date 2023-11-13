@@ -16,7 +16,7 @@
           </a>
           <ul class="dropdown-menu">
             <ng-container *ngFor="let category of categories; let last = last">
-              <li><a class="dropdown-item" [routerLink]="">{{category.name}}</a></li>
+              <li><a class="dropdown-item" (click)="navigateToCategory(category)">{{category.name}}</a></li>
               <li *ngIf="!last">
                 <hr class="dropdown-divider"></li>
             </ng-container>
