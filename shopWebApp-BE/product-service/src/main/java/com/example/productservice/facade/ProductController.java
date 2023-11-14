@@ -19,7 +19,7 @@ public class ProductController {
     public ResponseEntity<?> get(
             HttpServletRequest request,
             @RequestParam(required = false) String name_like,
-            @RequestParam(required = false) String data,
+            @RequestParam(required = false) String date,
             @RequestParam(required = false) String _category,
             @RequestParam(required = false) Float minPrice,
             @RequestParam(required = false) Float maxPrice,
@@ -28,7 +28,7 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "price") String _sort,
             @RequestParam(required = false, defaultValue = "asc") String _order
             ) {
-        return productMediator.getProduct(_page, _limit, name_like, _category, minPrice, maxPrice, data, _sort, _order);
+        return productMediator.getProduct(_page, _limit, name_like, _category, minPrice, maxPrice, date, _sort, _order);
     }
 
     @RequestMapping(method = RequestMethod.POST)

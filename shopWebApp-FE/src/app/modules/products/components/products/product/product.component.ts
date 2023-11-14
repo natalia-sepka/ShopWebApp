@@ -8,4 +8,11 @@ import { PrimitiveProduct } from '../../../../core/models/products.model';
 })
 export class ProductComponent {
   @Input() product!: PrimitiveProduct;
+
+  getProductsDetailsUrl() {
+    return `/product/${this.product.name}-${this.product.createAt.replaceAll(
+      '-',
+      '',
+    )}`;
+  }
 }

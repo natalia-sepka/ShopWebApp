@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card" [routerLink]="getProductsDetailsUrl()">
   <img [src]="product.imageUrl" [alt]="product.name" class="card-img-top">
   <div class="card-body">
     <h5 class="card-title">{{product.name}}</h5>
