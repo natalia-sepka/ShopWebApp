@@ -10,6 +10,7 @@ export interface Product extends Omit<PrimitiveProduct, 'imageUrl'> {
   uid: string;
   activate: boolean;
   descHtml: string;
+  mainDesc: string;
   imageUrls: string[];
   parameters: string;
   categoryDTO: {
