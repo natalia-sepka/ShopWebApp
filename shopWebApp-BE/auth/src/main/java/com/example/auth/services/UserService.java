@@ -94,11 +94,14 @@ public class UserService {
 
     public ResponseEntity<?> login(HttpServletResponse response, User authRequest) {
         User user = userRepository.findUserByLoginAndLockAndEnabled(authRequest.getUsername()).orElse(null);
+        System.out.println("User: " + user.getUsername());
         if (user != null) {
+            System.out.println("User not null.");
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authRequest.getUsername(), authRequest.getPassword()
             ));
             if (authenticate.isAuthenticated()) {
+                System.out.println("Authentication OK.");
                 Cookie refresh = cookieService.generateCookie("refresh", generateToken(authRequest.getUsername(), refreshExp), refreshExp);
                 Cookie cookie = cookieService.generateCookie("Authorization", generateToken(authRequest.getUsername(), exp), exp);
                 response.addCookie(cookie);
