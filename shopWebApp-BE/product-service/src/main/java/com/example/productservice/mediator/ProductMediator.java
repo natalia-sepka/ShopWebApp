@@ -26,7 +26,7 @@ public class ProductMediator {
     private final ProductEntityToProductDTO productEntityToProductDTO;
     private final ProductFormToProductEntity productFormToProductEntity;
 
-    @Value("${file-service.url}")
+    @Value("${file-service.url}/")
     private String FILE_SERVICE;
 
     public ResponseEntity<?> getProduct(
