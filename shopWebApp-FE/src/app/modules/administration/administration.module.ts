@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdminComponent } from './components/admin/admin.component';
 import { AddCategoryFormComponent } from './components/admin/add-category-form/add-category-form.component';
 import { ManageProductsComponent } from './components/admin/manage-products/manage-products.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,11 @@ import { ManageProductsComponent } from './components/admin/manage-products/mana
     AddCategoryFormComponent,
     ManageProductsComponent,
   ],
-  imports: [CommonModule, AdministrationRoutingModule],
+  imports: [
+    AdministrationRoutingModule,
+    MatFormFieldModule,
+    MatInputModule,
+    SharedModule,
+  ],
 })
 export class AdministrationModule {}
