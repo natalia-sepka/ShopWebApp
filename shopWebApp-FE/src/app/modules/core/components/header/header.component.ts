@@ -45,4 +45,8 @@ export class HeaderComponent implements OnInit {
       },
     });
   }
+
+  isAdmin(role: string) {
+    return role === 'ADMIN';
+  }
 }
