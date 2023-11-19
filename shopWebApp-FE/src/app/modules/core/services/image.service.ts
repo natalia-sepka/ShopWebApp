@@ -34,4 +34,8 @@ export class ImageService {
       params,
     });
   }
+
+  getImage(uuid: string): Observable<Image> {
+    return this.http.get<Image>(`${this.apiUrl}?uuid`);
+  }
 }

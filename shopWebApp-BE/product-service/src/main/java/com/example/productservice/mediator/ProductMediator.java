@@ -26,7 +26,7 @@ public class ProductMediator {
     private final ProductEntityToProductDTO productEntityToProductDTO;
     private final ProductFormToProductEntity productFormToProductEntity;
 
-    @Value("${file-service.url}/")
+    @Value("${file-service.url}")
     private String FILE_SERVICE;
 
     public ResponseEntity<?> getProduct(
@@ -53,7 +53,7 @@ public class ProductMediator {
         );
         product.forEach( value -> {
             for (int i = 0; i < value.getImageUrls().length; i++) {
-                value.getImageUrls()[i] = FILE_SERVICE + value.getImageUrls()[i];
+                value.getImageUrls()[i] = FILE_SERVICE + "?uuid=" + value.getImageUrls()[i];
             }
         });
         if (name != null && !name.isEmpty()) {
