@@ -1,0 +1,12 @@
+<section class="mt-3">
+  <mat-form-field (click)="fileInput.click()">
+    <input type="text" [value]="fileName" matInput placeholder="Choose image (png)" readonly accept="image/png">
+    <mat-icon matSuffix>attach_file</mat-icon>
+  </mat-form-field>
+  <input type="file" #fileInput (change)="onFileSelected($event)">
+  <div class="d-flex justify-content-end">
+    <button mat-raised-button color="primary" (click)="uploadFile()">Upload image</button>
+  </div>
+  <app-alert *ngIf="errorImageUploadMsg" [message]="errorImageUploadMsg" [alertType]='"warning"'></app-alert>
+  <app-uploaded-images *ngIf="imageUrls.length > 0" [imageUrls]="imageUrls" (deleteImageUrl)="setActiveImageUrls($event)"></app-uploaded-images>
+</section>
