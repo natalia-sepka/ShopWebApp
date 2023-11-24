@@ -21,3 +21,12 @@ export interface PasswordsForm {
   password: FormControl<string>;
   repeatedPassword: FormControl<string>;
 }
+
+export interface PostProduct {
+  descHtml: FormControl<string>;
+  price: FormControl<string>;
+  name: FormControl<string>;
+  category: FormControl<string>;
+  mainDesc: FormControl<string>;
+  parameters: FormControl<string>;
+}

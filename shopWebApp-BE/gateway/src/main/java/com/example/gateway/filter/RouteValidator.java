@@ -26,6 +26,7 @@ public class RouteValidator {
             new Endpoint("/api/v1/auto-login", HttpMethod.GET, Role.GUEST),
             new Endpoint("/api/v1/logged-in", HttpMethod.GET, Role.GUEST),
             new Endpoint("/api/v1/product", HttpMethod.GET, Role.GUEST),
+            new Endpoint("/api/v1/product", HttpMethod.POST, Role.GUEST),
             new Endpoint("/api/v1/product", HttpMethod.DELETE, Role.GUEST),
             new Endpoint("/api/v1/category", HttpMethod.GET, Role.GUEST),
             new Endpoint("/api/v1/category", HttpMethod.POST, Role.GUEST)

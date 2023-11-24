@@ -9,4 +9,53 @@
   </div>
   <app-alert *ngIf="errorImageUploadMsg" [message]="errorImageUploadMsg" [alertType]='"warning"'></app-alert>
   <app-uploaded-images *ngIf="imageUrls.length > 0" [imageUrls]="imageUrls" (deleteImageUrl)="setActiveImageUrls($event)"></app-uploaded-images>
+
+  <form [formGroup]="addProduct" (ngSubmit)="addNewProduct()">
+    <div class='form-array-input'>
+      <mat-form-field appearance='fill'>
+        <mat-label>Product name</mat-label>
+        <input matInput [formControl]="controls.name">
+        <mat-error *ngIf="controls.name.invalid">{{ getErrorMessage(controls.name) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='form-array-input'>
+      <mat-form-field appearance='fill'>
+        <mat-label>Short description</mat-label>
+        <input matInput [formControl]="controls.mainDesc">
+        <mat-error *ngIf="controls.mainDesc.invalid">{{ getErrorMessage(controls.mainDesc) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <angular-editor [formControl]="controls.descHtml" [config]="config"></angular-editor>
+    <div class='form-input mt-2'>
+      <mat-form-field appearance='fill'>
+        <mat-label>Price</mat-label>
+        <input matInput type="number" [formControl]="controls.price">
+        <mat-error *ngIf="controls.price.invalid">{{ getErrorMessage(controls.price) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='form-input mt-2'>
+      <mat-form-field>
+        <mat-label>Choose category</mat-label>
+        <mat-select [formControl]='controls.category'>
+          <mat-option value=''>-</mat-option>
+          <mat-option *ngFor='let category of categories | async' [value]='category.shortId'>{{category.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf='controls.category.invalid'>{{ getErrorMessage(controls.category) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='form-input'>
+      <mat-form-field appearance='fill'>
+        <mat-label>Parameters</mat-label>
+        <input matInput [formControl]="controls.parameters">
+        <mat-error *ngIf="controls.parameters.invalid">{{ getErrorMessage(controls.parameters) }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='d-flex justify-content-end'>
+      <button mat-raised-button color='primary' type="submit" [disabled]="addProduct.invalid">Add product</button>
+    </div>
+
+    <app-alert *ngIf="successAddProductMsg" [message]="successAddProductMsg" [alertType]='"success"'></app-alert>
+    <app-alert *ngIf="errorAddProductMsg" [message]="errorAddProductMsg" [alertType]='"warning"'></app-alert>
+
+  </form>
 </section>

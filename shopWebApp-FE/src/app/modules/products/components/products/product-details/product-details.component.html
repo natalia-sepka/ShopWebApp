@@ -14,7 +14,7 @@
   <div class='row'>
     <div class='col-md-12 mt-3'>
       <p class='product-desc'>Product description</p>
-      <div [innerHtml]='product.descHtml'></div>
+      <div *ngIf="htmlContent" [innerHtml]='htmlContent'></div>
     </div>
   </div>
   <div class='row' *ngIf='parameters'>
