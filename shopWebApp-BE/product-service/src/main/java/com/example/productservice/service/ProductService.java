@@ -142,7 +142,7 @@ public class ProductService {
 
     private void activateImage(String uuid) {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(FILE_SERVICE + "?uuid" + uuid))
+                .uri(URI.create(FILE_SERVICE + "?uuid=" + uuid))
                 .method("PATCH", HttpRequest.BodyPublishers.noBody())
                 .build();
         try {
@@ -167,6 +167,6 @@ public class ProductService {
 
     public void deleteImages(String uuid) {
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(FILE_SERVICE + "?uuid" + uuid);
+        restTemplate.delete(FILE_SERVICE + "?uuid=" + uuid);
     }
 }

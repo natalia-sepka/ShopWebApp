@@ -11,6 +11,7 @@ import { AddProductFormComponent } from './components/admin/manage-products/add-
 import { DeleteProductFormComponent } from './components/admin/manage-products/delete-product-form/delete-product-form.component';
 import { UploadedImagesComponent } from './components/admin/manage-products/add-product-form/uploaded-images/uploaded-images.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { DeleteProductDialogComponent } from './components/admin/manage-products/delete-product-form/delete-product-dialog/delete-product-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     AddProductFormComponent,
     DeleteProductFormComponent,
     UploadedImagesComponent,
+    DeleteProductDialogComponent,
   ],
   imports: [
     AdministrationRoutingModule,

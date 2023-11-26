@@ -5,9 +5,9 @@ import { map, Observable } from 'rxjs';
 import {
   AddProductData,
   GetProductsResponse,
-  PostProductResponse,
   PrimitiveProduct,
   Product,
+  ProductResponse,
 } from '../models/products.model';
 
 @Injectable({
@@ -69,13 +69,17 @@ export class ProductsService {
       );
   }
 
-  addProduct(addProductData: AddProductData): Observable<PostProductResponse> {
-    return this.http.post<PostProductResponse>(
-      `${this.apiUrl}`,
-      addProductData,
-      {
-        withCredentials: true,
-      },
-    );
+  addProduct(addProductData: AddProductData): Observable<ProductResponse> {
+    return this.http.post<ProductResponse>(`${this.apiUrl}`, addProductData, {
+      withCredentials: true,
+    });
+  }
+
+  deleteProduct(uuid: string): Observable<ProductResponse> {
+    const params = new HttpParams().append('uuid', uuid);
+    return this.http.delete<ProductResponse>(`${this.apiUrl}`, {
+      params,
+      withCredentials: true,
+    });
   }
 }
