@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -168,5 +169,9 @@ public class ProductService {
     public void deleteImages(String uuid) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(FILE_SERVICE + "?uuid=" + uuid);
+    }
+
+    public Optional<ProductEntity> getProductByUuid(String uuid) {
+        return productRepository.findByUid(uuid);
     }
 }
