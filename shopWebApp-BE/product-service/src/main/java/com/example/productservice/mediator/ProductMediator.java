@@ -96,4 +96,15 @@ public class ProductMediator {
             return ResponseEntity.status(400).body(new Response("Product doesn't exist"));
         }
     }
+
+    public ResponseEntity<?> getProductExtend(String uuid) {
+        ProductEntity product = productService.getProductByUuid(uuid).orElse(null);
+        if (product != null) {
+            for (int i = 0; i < product.getImageUrls().length; i++) {
+                product.getImageUrls()[i] = FILE_SERVICE + "?uuid=" + product.getImageUrls()[i];
+            }
+            return ResponseEntity.ok(product);
+        }
+        return ResponseEntity.status(400).body(new Response("Product doesn't exist"));
+    }
 }
