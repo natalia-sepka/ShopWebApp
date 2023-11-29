@@ -1,6 +1,8 @@
 package com.example.basket.service;
 
 import com.example.basket.entity.*;
+import com.example.basket.exceptions.BasketItemDoesntExistException;
+import com.example.basket.exceptions.NoBasketInfoException;
 import com.example.basket.repository.BasketItemsRepository;
 import com.example.basket.repository.BasketRepository;
 import jakarta.servlet.http.Cookie;
@@ -77,7 +79,7 @@ public class BasketService {
         try {
             Product product = getProduct(basketItemAddDTO.getProduct());
             if (product != null) {
-                basketItemsRepository.findByBasketAndProduct(basket, product.getId()).ifPresentOrElse(basketItems1 -> {
+                basketItemsRepository.findByBasketAndProduct(basket, product.getUid()).ifPresentOrElse(basketItems1 -> {
                     basketItems1.setQuantity(basketItems1.getQuantity() + basketItemAddDTO.getQuantity());
                     basketItemsRepository.save(basketItems1);
                 }, () -> {
@@ -100,5 +102,35 @@ public class BasketService {
             return null;
         }
         return (Product) response.getBody();
+    }
+
+    public ResponseEntity<Response> delete(String uuid, HttpServletRequest request) throws NoBasketInfoException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        List<Cookie> cookies = new ArrayList<>();
+        if (request.getCookies() != null) {
+            cookies.addAll(List.of(request.getCookies()));
+        }
+        cookies.stream().filter(value -> value.getName().equals("basket"))
+                .findFirst().ifPresentOrElse(value -> {
+                    basketRepository.findByUuid(value.getValue()).ifPresentOrElse(basket -> {
+                        deleteItem(uuid,basket);
+                        Long sum = basketItemsRepository.sumBasketItems(basket.getId());
+                        if (sum == null) sum = 0L;
+                        httpHeaders.add("X-TOTAL-COUNT", String.valueOf(sum));
+                    }, () -> {
+                        throw new NoBasketInfoException("Basket doesn't exist");
+                    });
+                }, () -> {
+                    throw new NoBasketInfoException("No basket info found in request");
+                });
+        return ResponseEntity.ok().headers(httpHeaders).body(new Response("Item from the basket successfully deleted."));
+    }
+
+    private void deleteItem(String uuid, Basket basket) throws BasketItemDoesntExistException {
+        basketItemsRepository.findBasketItemsByProduct(uuid).ifPresentOrElse(basketItemsRepository::delete, () -> {
+            throw new BasketItemDoesntExistException("Basket item doesn't exist");
+        });
+        Long sum = basketItemsRepository.sumBasketItems(basket.getId());
+        if (sum == null || sum == 0) basketRepository.delete(basket);
     }
 }
