@@ -30,4 +30,7 @@ public class BasketController {
     public ResponseEntity<Response> delete(@RequestParam String uuid, HttpServletRequest request) {
         return basketService.delete(uuid, request);
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getItems(HttpServletRequest request) { return basketService.getItems(request); }
 }
