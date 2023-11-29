@@ -18,7 +18,7 @@ public class RouteValidator {
             new Endpoint("/auth/register", HttpMethod.POST, Role.GUEST),
             new Endpoint("/auth/login", HttpMethod.POST, Role.GUEST),
             new Endpoint("/auth/validate", HttpMethod.GET, Role.GUEST),
-            new Endpoint("/auth/activate", HttpMethod.POST, Role.GUEST),
+            new Endpoint("/auth/activate", HttpMethod.GET, Role.GUEST),
             new Endpoint("/auth/authorize", HttpMethod.GET, Role.GUEST),
             new Endpoint("/auth/reset-password", HttpMethod.PATCH, Role.GUEST),
             new Endpoint("/auth/reset-password", HttpMethod.POST, Role.GUEST),
