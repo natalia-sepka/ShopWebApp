@@ -7,14 +7,19 @@
       <div class="text-center">
         <p class="product-name">{{product.name}}</p>
         <p>{{product.price | currency: 'zł'}}</p>
-        <p>Buy!</p>
+        <div class="d-flex justify-content-center">
+          <app-quantity-control [formControl]="quantityControl"></app-quantity-control>
+        </div>
+        <div class="d-flex justify-content-center my-2">
+          <button mat-raised-button color="primary" (click)="addToBasket()">Add to basket</button>
+        </div>
       </div>
     </div>
 </div>
   <div class='row'>
     <div class='col-md-12 mt-3'>
       <p class='product-desc'>Product description</p>
-      <div *ngIf="htmlContent" [innerHtml]='htmlContent'></div>
+      <div *ngIf="htmlContent" [innerHtml]='htmlContent' class="html-text"></div>
     </div>
   </div>
   <div class='row' *ngIf='parameters'>
