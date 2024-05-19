@@ -1,1 +1,23 @@
-<p>basket works!</p>
+<div class='row' *ngIf='basketProducts.length === 0'>
+  <p>Basket is empty. Add something.</p>
+</div>
+
+<div class='row' *ngIf='basketProducts.length > 0'>
+  <div class='col-md-9'>
+    <div class='basket-product' *ngFor='let basketProduct of basketProducts'>
+      <app-basket-product [basketProduct]='basketProduct'></app-basket-product>
+    </div>
+  </div>
+
+  <div class='col-md-3'>
+    <div class='summary-wrapper'>
+      <h2 class='text-center summary-heading'>Basket summary:</h2>
+      <p class='text-center'>Order without shipping:</p>
+      <p class='text-center'>{{summaryPrice | currency: 'zł'}}</p>
+      <div class='d-flex justify-content-center'>
+        <button mat-raised-button color='primary'>Finalize order</button>
+      </div>
+    </div>
+  </div>
+</div>
+
