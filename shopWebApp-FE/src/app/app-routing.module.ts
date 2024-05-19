@@ -21,6 +21,11 @@ const routes: Routes = [
         (m) => m.AdministrationModule,
       ),
   },
+  {
+    path: 'basket',
+    loadChildren: () =>
+      import('./modules/basket/basket.module').then((m) => m.BasketModule),
+  },
 ];
 
 @NgModule({
