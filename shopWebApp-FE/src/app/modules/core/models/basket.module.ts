@@ -1,3 +1,5 @@
+import { ServerResponse } from './server-response.model';
+
 export interface BasketProduct {
   uuid: string;
   name: string;
@@ -10,4 +12,14 @@ export interface BasketProduct {
 export interface GetBasketResponse {
   basketProducts: BasketProduct[];
   summaryPrice: number;
+}
+
+export interface PostBasketBody {
+  product: string;
+  quantity: number;
+}
+
+export interface BasketResponse {
+  body: ServerResponse | GetBasketResponse;
+  totalCount: number;
 }

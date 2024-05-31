@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../store/app.reducer';
 import * as AuthActions from '../../../auth/store/auth.actions';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../models/auth.model';
 import { selectAuthUser } from '../../../auth/store/auth.selectors';
 import { Category } from '../../models/categories.model';
 import { CategoriesService } from '../../services/categories.service';
 import { Router } from '@angular/router';
+import { BasketService } from '../../services/basket.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   user$: Observable<User | null> = this.store.select(selectAuthUser);
+  basketTotalCount$: BehaviorSubject<number> = this.basketService.totalCount$;
 
   categories: Category[] = [
     { name: 'furniture`s', shortId: 12345678 },
@@ -25,6 +27,7 @@ export class HeaderComponent implements OnInit {
     private store: Store<AppState>,
     private categoryService: CategoriesService,
     private router: Router,
+    private basketService: BasketService,
   ) {}
   logout() {
     this.store.dispatch(AuthActions.logout());

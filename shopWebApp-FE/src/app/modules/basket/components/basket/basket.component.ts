@@ -11,7 +11,7 @@ export class BasketComponent {
     {
       name: 'Testowy produkt',
       price: 150,
-      imageUrl: 'https:/i/imgur.com/kHeKKij.jpg',
+      imageUrl: 'https://imgur.com/kHeKKij.jpg',
       quantity: 2,
       uuid: 'test',
       summaryPrice: 300,
@@ -19,7 +19,7 @@ export class BasketComponent {
     {
       name: 'Testowy produkt 2',
       price: 150,
-      imageUrl: 'https:/i/imgur.com/kHeKKij.jpg',
+      imageUrl: 'https://imgur.com/kHeKKij.jpg',
       quantity: 2,
       uuid: 'test',
       summaryPrice: 300,
