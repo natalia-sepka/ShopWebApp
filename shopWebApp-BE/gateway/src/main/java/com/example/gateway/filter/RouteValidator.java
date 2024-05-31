@@ -29,7 +29,10 @@ public class RouteValidator {
             new Endpoint("/api/v1/product", HttpMethod.POST, Role.GUEST),
             new Endpoint("/api/v1/product", HttpMethod.DELETE, Role.GUEST),
             new Endpoint("/api/v1/category", HttpMethod.GET, Role.GUEST),
-            new Endpoint("/api/v1/category", HttpMethod.POST, Role.GUEST)
+            new Endpoint("/api/v1/category", HttpMethod.POST, Role.GUEST),
+            new Endpoint("/api/v1/basket", HttpMethod.POST, Role.GUEST),
+            new Endpoint("/api/v1/basket", HttpMethod.GET, Role.GUEST),
+            new Endpoint("/api/v1/basket", HttpMethod.DELETE, Role.GUEST)
     ));
 
     private Set<Endpoint> adminEndpoints = new HashSet<>();

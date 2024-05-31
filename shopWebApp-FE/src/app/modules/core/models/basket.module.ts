@@ -20,6 +20,6 @@ export interface PostBasketBody {
 }
 
 export interface BasketResponse {
-  body: ServerResponse | GetBasketResponse;
+  body: ServerResponse | GetBasketResponse | null;
   totalCount: number;
 }
