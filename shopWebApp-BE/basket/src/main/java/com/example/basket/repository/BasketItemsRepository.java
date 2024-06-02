@@ -12,7 +12,7 @@ public interface BasketItemsRepository extends JpaRepository<BasketItems,Long> {
 
     List<BasketItems> findBasketItemsByBasket(Basket basket);
 
-    Optional<BasketItems> findBasketItemsByUuid(String uuid);
+    Optional<BasketItems> findBasketItemsByProduct(String uuid);
 
     @Query(nativeQuery = true, value = "SELECT SUM(quantity) from basket_items where basket = ?1")
     Long sumBasketItems(long basket);

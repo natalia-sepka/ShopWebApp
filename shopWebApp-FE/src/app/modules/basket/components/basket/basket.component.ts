@@ -31,4 +31,10 @@ export class BasketComponent implements OnInit {
       },
     });
   }
+
+  deleteProduct(uuid: string) {
+    this.basketProducts = this.basketProducts.filter(
+      (product) => product.uuid !== uuid,
+    );
+  }
 }

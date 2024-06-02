@@ -75,6 +75,7 @@ public class BasketService {
     }
 
     private void addProductToBasket(Basket basket, BasketItemAddDTO basketItemAddDTO) {
+        System.out.println("add to basket");
         BasketItems basketItems = new BasketItems();
         try {
             Product product = getProduct(basketItemAddDTO.getProduct());
@@ -127,7 +128,7 @@ public class BasketService {
     }
 
     private void deleteItem(String uuid, Basket basket) throws BasketItemDoesntExistException {
-        basketItemsRepository.findBasketItemsByUuid(uuid).ifPresentOrElse(basketItemsRepository::delete, () -> {
+        basketItemsRepository.findBasketItemsByProduct(uuid).ifPresentOrElse(basketItemsRepository::delete, () -> {
             throw new BasketItemDoesntExistException("Basket item doesn't exist");
         });
         Long sum = basketItemsRepository.sumBasketItems(basket.getId());
