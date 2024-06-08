@@ -60,7 +60,11 @@
 			<artifactId>mapstruct-processor</artifactId>
 			<version>1.5.0.Final</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+        </dependency>
+    </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
