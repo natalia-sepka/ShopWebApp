@@ -1,15 +1,18 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.*;
+import com.example.demo.exception.BasketDoesntExistException;
+import com.example.demo.exception.EmptyBasketException;
+import com.example.demo.exception.UnknownDeliverTypeException;
 import com.example.demo.repository.DeliverRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.translators.BasketItemDTOToOrderItems;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
@@ -33,7 +36,7 @@ public class OrderService {
     private final AuthService authService;
 
     private Order save(Order order) {
-        Deliver deliver = deliverRepository.findByUuid(order.getDeliver().getUuid()).orElseThrow(RuntimeException::new);
+        Deliver deliver = deliverRepository.findByUuid(order.getDeliver().getUuid()).orElseThrow(UnknownDeliverTypeException::new);
         StringBuilder stringBuilder = new StringBuilder("ORDER/")
                 .append(orderRepository.count())
                 .append("/")
@@ -64,7 +67,7 @@ public class OrderService {
         AtomicReference<String> result = new AtomicReference<>();
         Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("basket")).findFirst().ifPresentOrElse(value -> {
             ListBasketItemDTO basket = basketService.getBasket(value);
-            if (basket.getBasketProducts().isEmpty()) throw new RuntimeException();
+            if (basket.getBasketProducts().isEmpty()) throw new EmptyBasketException();
             List<OrderItems> items = new ArrayList<>();
             basket.getBasketProducts().forEach(item -> {
                 OrderItems orderItems = basketItemDTOToItems.toOrderItems(item);
@@ -78,7 +81,7 @@ public class OrderService {
             response.addCookie(value);
             emailService.sendActivation(order.getEmail(),order.getUuid());
         }, () -> {
-            throw new RuntimeException();
+            throw new BasketDoesntExistException();
         });
         return result.get();
         }

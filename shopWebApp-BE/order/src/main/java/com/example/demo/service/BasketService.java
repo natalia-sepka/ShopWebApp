@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.ListBasketItemDTO;
+import com.example.demo.exception.BasketDoesntExistException;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,10 +30,10 @@ public class BasketService {
                     new HttpEntity<String>(headers),
                     ListBasketItemDTO.class);
         }catch (HttpClientErrorException e){
-            throw new RuntimeException();
+            throw new BasketDoesntExistException("Basket doesn't exist");
         }
 
-        if (response.getStatusCode().isError()) throw new RuntimeException();
+        if (response.getStatusCode().isError()) throw new BasketDoesntExistException("Basket doesn't exist");
         return response.getBody();
     }
 
