@@ -12,7 +12,8 @@ import lombok.Setter;
 public class Items {
     private String uuid;
     private String name;
+    private String imageUrl;
     private long quantity;
-    private double priceUnit;
-    private double priceSummary;
+    private double price;
+    private double summaryPrice;
 }

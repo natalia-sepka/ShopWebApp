@@ -57,12 +57,10 @@ public class OrderService {
         List<Cookie> cookies = Arrays.stream(request.getCookies()).filter(value->
                         value.getName().equals("Authorization") || value.getName().equals("refresh"))
                 .toList();
-        try {
-            UserRegisterDTO userRegisterDTO = authService.getUserDetails(cookies);
-            if (userRegisterDTO != null) {
-                order.setClient(userRegisterDTO.getLogin());
-            }
-        } catch (HttpClientErrorException e){}
+        UserRegisterDTO userRegisterDTO = authService.getUserDetails(cookies);
+        if (userRegisterDTO != null) {
+            order.setClient(userRegisterDTO.getLogin());
+        }
 
         Order finalOrder = save(order);
         AtomicReference<String> result = new AtomicReference<>();
@@ -95,5 +93,14 @@ public class OrderService {
             throw new OrderDoesntExistException();
         });
     }
+
+    public Order getOrderByUuid(String uuid) {
+        return orderRepository.findOrderByUuid(uuid).orElseThrow(OrderDoesntExistException::new);
+    }
+
+    public List<Order> getOrdersByClient(String login) {
+        return orderRepository.findOrderByClient(login);
+    }
+
 
 }

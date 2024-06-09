@@ -22,7 +22,7 @@ public class AuthService {
     private String auth_url;
     private final RestTemplate restTemplate;
 
-    public UserRegisterDTO getUserDetails(List<Cookie> cookie) throws HttpClientErrorException {
+    public UserRegisterDTO getUserDetails(List<Cookie> cookie) {
         HttpHeaders httpHeaders = new HttpHeaders();
         StringBuilder cookieString = new StringBuilder();
         cookie.forEach(value->{
@@ -32,7 +32,11 @@ public class AuthService {
         cookieString.deleteCharAt(cookieString.length()-1);
         httpHeaders.add("Cookie",cookieString.toString());
         HttpEntity<Void> requestEntity = new HttpEntity<>(httpHeaders);
-        ResponseEntity<UserRegisterDTO> response = restTemplate.exchange(auth_url, HttpMethod.GET,requestEntity, UserRegisterDTO.class);
-        return  response.getStatusCode().isError() ? null : response.getBody();
+        try{
+            ResponseEntity<UserRegisterDTO> response = restTemplate.exchange(auth_url, HttpMethod.GET,requestEntity, UserRegisterDTO.class);
+            return response.getStatusCode().isError() ? null : response.getBody();
+        }catch (HttpClientErrorException e){
+            return null;
+        }
     }
 }

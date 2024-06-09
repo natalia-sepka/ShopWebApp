@@ -29,6 +29,11 @@ public class OrderController {
         return orderMediator.handleNotify(notify,request);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> get(@RequestParam(required = false) String uuid,HttpServletRequest request){
+        return orderMediator.getOrder(uuid,request);
+    }
+
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(EmptyBasketException.class)
@@ -54,6 +59,12 @@ public class OrderController {
     @ExceptionHandler(UserDoesntLogInException.class)
     public Response handleValidationExceptions(UserDoesntLogInException ex){
         return new Response("User is not logged in");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OrderDoesntExistException.class)
+    public Response handleValidationExceptions(OrderDoesntExistException ex){
+        return new Response("Order doesn't exist");
     }
 
 }
