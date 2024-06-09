@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.*;
 import com.example.demo.exception.BasketDoesntExistException;
 import com.example.demo.exception.EmptyBasketException;
+import com.example.demo.exception.OrderDoesntExistException;
 import com.example.demo.exception.UnknownDeliverTypeException;
 import com.example.demo.repository.DeliverRepository;
 import com.example.demo.repository.OrderRepository;
@@ -85,4 +86,14 @@ public class OrderService {
         });
         return result.get();
         }
+
+    public void completeOrder(com.example.demo.entity.notify.Notify notify)throws OrderDoesntExistException {
+        orderRepository.findOrderByOrders(notify.getOrder().getExtOrderId()).ifPresentOrElse(value->{
+            value.setStatus(notify.getOrder().getStatus());
+            orderRepository.save(value);
+        },()->{
+            throw new OrderDoesntExistException();
+        });
     }
+
+}
