@@ -4,10 +4,13 @@ import com.example.demo.entity.*;
 import com.example.demo.repository.DeliverRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.translators.BasketItemDTOToOrderItems;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,6 +30,7 @@ public class OrderService {
     private final BasketItemDTOToOrderItems basketItemDTOToItems;
     private final PayUService payUService;
     private final EmailService emailService;
+    private final AuthService authService;
 
     private Order save(Order order) {
         Deliver deliver = deliverRepository.findByUuid(order.getDeliver().getUuid()).orElseThrow(RuntimeException::new);
@@ -44,7 +48,18 @@ public class OrderService {
         return orderRepository.saveAndFlush(order);
     }
 
+    @Transactional
     public String createOrder(Order order, HttpServletRequest request, HttpServletResponse response) {
+        List<Cookie> cookies = Arrays.stream(request.getCookies()).filter(value->
+                        value.getName().equals("Authorization") || value.getName().equals("refresh"))
+                .toList();
+        try {
+            UserRegisterDTO userRegisterDTO = authService.getUserDetails(cookies);
+            if (userRegisterDTO != null) {
+                order.setClient(userRegisterDTO.getLogin());
+            }
+        } catch (HttpClientErrorException e){}
+
         Order finalOrder = save(order);
         AtomicReference<String> result = new AtomicReference<>();
         Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals("basket")).findFirst().ifPresentOrElse(value -> {
