@@ -25,7 +25,6 @@ public abstract  class OrderToOrderDTO {
     protected abstract Address translateAddress(Order order);
 
     @Mappings({})
-    protected abstract CustomerDetails translateToCustomer(Deliver deliver);
-
+    protected abstract DeliverDTO translateDeliver(Deliver deliver);
 }
 

@@ -4,6 +4,7 @@ import {
   GetBasketResponse,
 } from '../../../core/models/basket.module';
 import { BasketService } from '../../../core/services/basket.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-basket',
@@ -15,7 +16,11 @@ export class BasketComponent implements OnInit {
   summaryPrice = 0;
   errorMessage: string | null = null;
 
-  constructor(private basketService: BasketService) {}
+  constructor(
+    private basketService: BasketService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.basketService.getBasketProducts().subscribe({
@@ -29,6 +34,13 @@ export class BasketComponent implements OnInit {
       error: (err) => {
         this.errorMessage = err;
       },
+    });
+  }
+
+  navigateToCreateOrder() {
+    this.router.navigate(['order'], {
+      relativeTo: this.route,
+      state: { summaryPrice: this.summaryPrice },
     });
   }
 
