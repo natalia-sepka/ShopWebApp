@@ -6,9 +6,15 @@ import { BasketProductComponent } from './components/basket/basket-product/baske
 import { SharedModule } from '../shared/shared.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CreateOrderComponent } from './components/create-order/create-order.component';
+import { CustomerFormComponent } from './components/create-order/customer-form/customer-form.component';
 
 @NgModule({
-  declarations: [BasketComponent, BasketProductComponent, CreateOrderComponent],
+  declarations: [
+    BasketComponent,
+    BasketProductComponent,
+    CreateOrderComponent,
+    CustomerFormComponent,
+  ],
   imports: [SharedModule, BasketRoutingModule, MatTooltipModule],
 })
 export class BasketModule {}

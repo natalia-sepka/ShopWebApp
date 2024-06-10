@@ -1,0 +1,11 @@
+<mat-form-field appearance="fill" class="prefix">
+  <mat-label>Prefix number</mat-label>
+  <input [formControl]="numberPrefixControl" matInput>
+  <mat-error *ngIf="numberPrefixControl.errors">Invalid prefix number</mat-error>
+</mat-form-field>
+<mat-form-field appearance="fill" class="number">
+  <mat-label>Phone number</mat-label>
+  <input [formControl]="numberControl" matInput>
+  <mat-error *ngIf="numberControl.errors">Phone number must have 9 digits.</mat-error>
+</mat-form-field>
+

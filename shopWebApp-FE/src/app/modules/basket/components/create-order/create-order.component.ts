@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { CustomerFormComponent } from './customer-form/customer-form.component';
 
 @Component({
   selector: 'app-create-order',
@@ -8,6 +9,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./create-order.component.scss'],
 })
 export class CreateOrderComponent implements OnInit {
+  @ViewChild(CustomerFormComponent) customerFormComp!: CustomerFormComponent;
   constructor(
     private location: Location,
     private router: Router,
@@ -21,5 +23,9 @@ export class CreateOrderComponent implements OnInit {
     if (!locationState.summaryPrice) {
       this.router.navigate(['']);
     }
+  }
+
+  order() {
+    console.log(this.customerFormComp.customerForm.getRawValue());
   }
 }

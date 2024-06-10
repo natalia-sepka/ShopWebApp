@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   AddCategoryForm,
+  CustomerForm,
   LoginForm,
   PasswordRecoveryForm,
   PasswordsForm,
@@ -131,6 +132,31 @@ export class FormService {
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(50),
+        ],
+        nonNullable: true,
+      }),
+    });
+  }
+
+  initCustomerForm(): FormGroup<CustomerForm> {
+    return new FormGroup({
+      firstName: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      lastName: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
+        nonNullable: true,
+      }),
+      phone: new FormControl('', {
+        validators: [
+          Validators.required,
+          Validators.minLength(12),
+          Validators.maxLength(12),
         ],
         nonNullable: true,
       }),
