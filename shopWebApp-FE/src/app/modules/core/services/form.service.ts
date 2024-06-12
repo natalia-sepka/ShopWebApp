@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   AddCategoryForm,
+  AddressForm,
   CustomerForm,
+  DeliveryForm,
   LoginForm,
   PasswordRecoveryForm,
   PasswordsForm,
@@ -163,6 +165,36 @@ export class FormService {
     });
   }
 
+  initAddressForm(): FormGroup<AddressForm> {
+    return new FormGroup({
+      city: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      street: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      number: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+      postCode: new FormControl('', {
+        validators: [Validators.required, Validators.pattern(/^\d{2}-\d{3}$/)],
+        nonNullable: true,
+      }),
+    });
+  }
+
+  initDeliveryForm(): FormGroup<DeliveryForm> {
+    return new FormGroup({
+      uuid: new FormControl('', {
+        validators: [Validators.required],
+        nonNullable: true,
+      }),
+    });
+  }
+
   getErrorMessage(control: FormControl): string {
     if (control.hasError('required')) {
       return 'This field is required';
@@ -178,6 +210,12 @@ export class FormService {
     }
     if (control.hasError('passwordNotEqual')) {
       return 'Passwords must be equal';
+    }
+    if (
+      control.hasError('pattern') &&
+      control.errors?.['pattern']?.['requiredPattern'] === '/^\\d{2}-\\d{3}$/'
+    ) {
+      return 'Invalid postcode format.';
     }
     return '';
   }
