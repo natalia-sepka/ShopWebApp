@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
   GetOrderResponse,
+  GetOrdersResponse,
   PostOrderBody,
   PostOrderResponse,
 } from '../models/order.model';
@@ -20,6 +21,12 @@ export class OrdersService {
     const params = new HttpParams().append('uuid', uuid);
     return this.http.get<GetOrderResponse>(`${this.apiUrl}`, {
       params,
+    });
+  }
+
+  getOrders(): Observable<GetOrdersResponse[]> {
+    return this.http.get<GetOrdersResponse[]>(`${this.apiUrl}`, {
+      withCredentials: true,
     });
   }
 

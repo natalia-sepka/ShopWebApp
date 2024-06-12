@@ -1,1 +1,19 @@
-<p>orders works!</p>
+<section *ngIf='orders.length > 0'>
+  <h2>Your orders list:</h2>
+  <mat-list>
+    <ng-container *ngFor='let order of orders'>
+      <div class='order-list-item'>
+        <span>{{order.orders}}</span>
+        <span>Status: {{order.status}}</span>
+        <span>Delivery: {{order.deliver.name}}</span>
+        <button mat-raised-button color='primary' (click)='navigateToDetails(order.uuid)'>Details</button>
+      </div>
+      <mat-divider></mat-divider>
+    </ng-container>
+  </mat-list>
+</section>
+
+<p *ngIf='!errorMsg && orders.length === 0'>No orders found for this user.</p>
+
+<app-alert [alertType]='"warning"' [message]='errorMsg' *ngIf='errorMsg'></app-alert>
+

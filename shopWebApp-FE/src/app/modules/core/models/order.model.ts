@@ -28,3 +28,8 @@ export interface GetOrderResponse {
   items: BasketProduct[];
   summaryPrice: number;
 }
+
+export type GetOrdersResponse = Omit<
+  GetOrderResponse,
+  'items' | 'summaryPrice'
+>;
