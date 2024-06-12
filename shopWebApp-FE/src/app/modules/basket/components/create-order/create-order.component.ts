@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { AddressFormComponent } from './address-form/address-form.component';
 import { DeliveryFormComponent } from './delivery-form/delivery-form.component';
+import { OrdersService } from '../../../core/services/orders.service';
 
 @Component({
   selector: 'app-create-order',
@@ -11,6 +12,8 @@ import { DeliveryFormComponent } from './delivery-form/delivery-form.component';
   styleUrls: ['./create-order.component.scss'],
 })
 export class CreateOrderComponent implements OnInit {
+  errorMsg: null | string = null;
+
   @ViewChild(CustomerFormComponent) customerFormComp!: CustomerFormComponent;
   @ViewChild(AddressFormComponent) addressFormComp!: AddressFormComponent;
   @ViewChild(DeliveryFormComponent) deliveryFormComp!: DeliveryFormComponent;
@@ -18,6 +21,7 @@ export class CreateOrderComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
+    private ordersService: OrdersService,
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +40,17 @@ export class CreateOrderComponent implements OnInit {
       this.addressFormComp.addressForm.valid &&
       this.deliveryFormComp.deliveryForm.valid
     ) {
-      // wykonywac zapytanie http - dodawanie nowego zamowienia
+      this.ordersService
+        .addOrder({
+          address: this.addressFormComp.addressForm.getRawValue(),
+          deliver: this.deliveryFormComp.deliveryForm.getRawValue(),
+          customerDetails: this.customerFormComp.customerForm.getRawValue(),
+        })
+        .subscribe({
+          error: (err) => {
+            this.errorMsg = err;
+          },
+        });
     }
   }
 }
