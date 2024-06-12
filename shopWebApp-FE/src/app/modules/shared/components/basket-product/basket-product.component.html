@@ -9,7 +9,7 @@
     <span>{{basketProduct.price | currency: 'zł'}}</span>
     <span>x {{basketProduct.quantity}}</span>
     <span>{{basketProduct.summaryPrice | currency: 'zł'}}</span>
-    <mat-icon class='basket-product-icon' matTooltip='Delete product from the basket' (click)='deleteProductFromBasket()'>cancel</mat-icon>
+    <mat-icon class='basket-product-icon' matTooltip='Remove product from basket' (click)='deleteProductFromBasket()' *ngIf='basketView'>cancel</mat-icon>
   </div>
 </div>
 

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { PostOrderBody, PostOrderResponse } from '../models/order.model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import {
+  GetOrderResponse,
+  PostOrderBody,
+  PostOrderResponse,
+} from '../models/order.model';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -11,6 +15,13 @@ export class OrdersService {
   apiUrl = `${environment.apiUrl}/order`;
 
   constructor(private http: HttpClient) {}
+
+  getOrder(uuid: string): Observable<GetOrderResponse> {
+    const params = new HttpParams().append('uuid', uuid);
+    return this.http.get<GetOrderResponse>(`${this.apiUrl}`, {
+      params,
+    });
+  }
 
   addOrder(body: PostOrderBody): Observable<PostOrderResponse> {
     return this.http

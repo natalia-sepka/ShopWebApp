@@ -1,6 +1,7 @@
 import { Customer } from './customer.model';
 import { Address } from './address.model';
-import { PostDelivery } from './delivery.model';
+import { GetDelivery, PostDelivery } from './delivery.model';
+import { BasketProduct } from './basket.module';
 
 export interface PostOrderBody {
   customerDetails: Customer;
@@ -15,4 +16,15 @@ export interface PostOrderResponse {
   redirectUri: string;
   orderId: string;
   extOrderId: string;
+}
+
+export interface GetOrderResponse {
+  uuid: string;
+  orders: string;
+  status: string;
+  customerDetails: Customer;
+  address: Address;
+  deliver: GetDelivery;
+  items: BasketProduct[];
+  summaryPrice: number;
 }

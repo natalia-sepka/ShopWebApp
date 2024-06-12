@@ -6,6 +6,9 @@ import { AlertComponent } from './components/alert/alert.component';
 import { QuantityControlComponent } from './controles/quantity-control/quantity-control.component';
 import { InputOnlyNumberDirective } from './directives/input-only-number.directive';
 import { PhoneControlComponent } from './controles/phone-control/phone-control.component';
+import { BasketProductComponent } from './components/basket-product/basket-product.component';
+import { MatLegacyTooltipModule } from '@angular/material/legacy-tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -13,14 +16,22 @@ import { PhoneControlComponent } from './controles/phone-control/phone-control.c
     QuantityControlComponent,
     InputOnlyNumberDirective,
     PhoneControlComponent,
+    BasketProductComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, MaterialModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    MatLegacyTooltipModule,
+    MatTooltipModule,
+  ],
   exports: [
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
     AlertComponent,
     QuantityControlComponent,
+    BasketProductComponent,
     PhoneControlComponent,
   ],
 })
