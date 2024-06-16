@@ -69,11 +69,13 @@ public class PayUService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.add("Authorization",token);
 
-        List<PayUProduct> product = items.stream().map(orderItemsToPayuProduct::toPayuProduct).toList();
-        AtomicLong totalPrice = new AtomicLong();
-        product.forEach(value-> totalPrice.set((long) (value.getUnitPrice() * value.getQuantity() * 100)));
+        List<PayUProduct> products = items.stream().map(orderItemsToPayuProduct::toPayuProduct).toList();
+        long totalPrice = (long) (finalOrder.getDeliver().getPrice() * 100);
+        for (PayUProduct product : products) {
+            totalPrice += product.getUnitPrice() * product.getQuantity() * 100;
+        }
         PayUBuyer buyer = new PayUBuyer(finalOrder.getEmail(),finalOrder.getPhone(),finalOrder.getFirstName(), finalOrder.getLastName());
-        PayUOrder payUOrder = new PayUOrder("https://your.eshop.com/notify","127.0.0.1",client_id,finalOrder.getOrders(),"PLN",totalPrice.get(),finalOrder.getOrders(),buyer,product);
+        PayUOrder payUOrder = new PayUOrder("https://your.eshop.com/notify","127.0.0.1",client_id,finalOrder.getOrders(),"PLN",totalPrice,finalOrder.getOrders(),buyer,products);
         HttpEntity<PayUOrder> requestEntity =
                 new HttpEntity<>(payUOrder, headers);
         return restTemplate.exchange(payu_url_order,HttpMethod.POST,requestEntity,String.class);

@@ -1,11 +1,23 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ControlValueAccessor, FormControl, Validators } from '@angular/forms';
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  Validators,
+} from '@angular/forms';
 import { combineLatest, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-phone-control',
   templateUrl: './phone-control.component.html',
   styleUrls: ['./phone-control.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: PhoneControlComponent,
+      multi: true,
+    },
+  ],
 })
 export class PhoneControlComponent implements ControlValueAccessor, OnDestroy {
   numberPrefixControl = new FormControl('', [

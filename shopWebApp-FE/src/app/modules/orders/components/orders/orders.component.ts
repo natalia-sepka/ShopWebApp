@@ -29,6 +29,6 @@ export class OrdersComponent implements OnInit {
   }
 
   navigateToDetails(uuid: string) {
-    this.router.navigate(['zamowienia', uuid]);
+    this.router.navigate(['orders', uuid]);
   }
 }
