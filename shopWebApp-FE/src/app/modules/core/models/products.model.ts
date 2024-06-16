@@ -30,7 +30,6 @@ export interface AddProductData {
   descHtml: string;
   price: number;
   imagesUuid: string[];
-  parameters: string;
   category: string;
 }
 

@@ -28,7 +28,6 @@ export interface PostProduct {
   name: FormControl<string>;
   category: FormControl<string>;
   mainDesc: FormControl<string>;
-  parameters: FormControl<string>;
 }
 
 export interface CustomerForm {

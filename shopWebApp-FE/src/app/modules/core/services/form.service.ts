@@ -47,10 +47,6 @@ export class FormService {
         validators: [Validators.required],
         nonNullable: true,
       }),
-      parameters: new FormControl('', {
-        validators: [Validators.required],
-        nonNullable: true,
-      }),
     });
   }
   initPasswordRecoveryForm(): FormGroup<PasswordRecoveryForm> {
