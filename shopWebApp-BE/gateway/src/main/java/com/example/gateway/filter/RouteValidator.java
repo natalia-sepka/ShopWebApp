@@ -33,6 +33,12 @@ public class RouteValidator {
             new Endpoint("/api/v1/basket", HttpMethod.POST, Role.GUEST),
             new Endpoint("/api/v1/basket", HttpMethod.GET, Role.GUEST),
             new Endpoint("/api/v1/basket", HttpMethod.DELETE, Role.GUEST),
+            new Endpoint("/api/v1/order", HttpMethod.POST, Role.GUEST),
+            new Endpoint("/api/v1/order", HttpMethod.POST, Role.ADMIN),
+            new Endpoint("/api/v1/order", HttpMethod.POST, Role.USER),
+            new Endpoint("/api/v1/order", HttpMethod.GET, Role.USER),
+            new Endpoint("/api/v1/order", HttpMethod.GET, Role.ADMIN),
+            new Endpoint("/api/v1/order", HttpMethod.GET, Role.GUEST),
             new Endpoint("/api/v1/image", HttpMethod.DELETE, Role.ADMIN)
     ));
 

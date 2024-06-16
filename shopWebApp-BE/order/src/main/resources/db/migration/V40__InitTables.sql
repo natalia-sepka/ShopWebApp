@@ -31,7 +31,7 @@ CREATE TABLE order_items
     name varchar not null,
     product varchar not null,
     priceunit decimal not null,
-    pricesumarry decimal not null,
+    pricesummary decimal not null,
     quantity bigint DEFAULT 1,
     orders bigint REFERENCES orders(id)
 );

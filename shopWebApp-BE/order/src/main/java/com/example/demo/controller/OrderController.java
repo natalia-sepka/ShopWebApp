@@ -34,7 +34,6 @@ public class OrderController {
         return orderMediator.getOrder(uuid,request);
     }
 
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(EmptyBasketException.class)
     public Response handleValidationExceptions(EmptyBasketException ex){

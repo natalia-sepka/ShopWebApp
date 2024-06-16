@@ -18,6 +18,8 @@ public abstract class BasketItemDTOToOrderItems {
     @Mappings({
             @Mapping(target = "id",ignore = true),
             @Mapping(target = "product",source = "uuid"),
+            @Mapping(target = "priceUnit",source = "price"),
+            @Mapping(target = "priceSummary",source = "summaryPrice"),
     })
     protected abstract OrderItems translate(BasketItemDTO basketItemDTO);
 }
